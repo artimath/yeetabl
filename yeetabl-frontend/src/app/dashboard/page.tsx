@@ -1,6 +1,51 @@
-import * as React from "react"
-import Image from "next/image"
-import Link from "next/link"
+'use client';
+import { ApiKeyManager } from '@/components/ApiKeyManager';
+import { Badge } from '@/components/ui/badge';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
+import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Input } from '@/components/ui/input';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+} from '@/components/ui/pagination';
+import { Progress } from '@/components/ui/progress';
+import { Separator } from '@/components/ui/separator';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import {
   ChevronLeft,
   ChevronRight,
@@ -19,67 +64,9 @@ import {
   ShoppingCart,
   Truck,
   Users2,
-} from "lucide-react"
-
-import { Badge } from "@/components/ui/badge"
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
-import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-} from "@/components/ui/pagination"
-import { Progress } from "@/components/ui/progress"
-import { Separator } from "@/components/ui/separator"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
-
-import { ApiKeyManager } from "@/components/ApiKeyManager";
-
-import { ApiKeyManager } from "@/components/ApiKeyManager";
+} from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Dashboard() {
   return (
@@ -194,10 +181,7 @@ export default function Dashboard() {
                   <Home className="h-5 w-5" />
                   Dashboard
                 </Link>
-                <Link
-                  href="#"
-                  className="flex items-center gap-4 px-2.5 text-foreground"
-                >
+                <Link href="#" className="flex items-center gap-4 px-2.5 text-foreground">
                   <ShoppingCart className="h-5 w-5" />
                   Orders
                 </Link>
@@ -282,14 +266,12 @@ export default function Dashboard() {
           <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
             <ApiKeyManager />
             <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
-              <Card
-                className="sm:col-span-2" x-chunk="dashboard-05-chunk-0"
-              >
+              <Card className="sm:col-span-2" x-chunk="dashboard-05-chunk-0">
                 <CardHeader className="pb-3">
                   <CardTitle>Your Orders</CardTitle>
                   <CardDescription className="max-w-lg text-balance leading-relaxed">
-                    Introducing Our Dynamic Orders Dashboard for Seamless
-                    Management and Insightful Analysis.
+                    Introducing Our Dynamic Orders Dashboard for Seamless Management and
+                    Insightful Analysis.
                   </CardDescription>
                 </CardHeader>
                 <CardFooter>
@@ -302,9 +284,7 @@ export default function Dashboard() {
                   <CardTitle className="text-4xl">$1,329</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-xs text-muted-foreground">
-                    +25% from last week
-                  </div>
+                  <div className="text-xs text-muted-foreground">+25% from last week</div>
                 </CardContent>
                 <CardFooter>
                   <Progress value={25} aria-label="25% increase" />
@@ -335,11 +315,7 @@ export default function Dashboard() {
                 <div className="ml-auto flex items-center gap-2">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="h-7 gap-1 text-sm"
-                      >
+                      <Button variant="outline" size="sm" className="h-7 gap-1 text-sm">
                         <ListFilter className="h-3.5 w-3.5" />
                         <span className="sr-only sm:not-sr-only">Filter</span>
                       </Button>
@@ -350,19 +326,11 @@ export default function Dashboard() {
                       <DropdownMenuCheckboxItem checked>
                         Fulfilled
                       </DropdownMenuCheckboxItem>
-                      <DropdownMenuCheckboxItem>
-                        Declined
-                      </DropdownMenuCheckboxItem>
-                      <DropdownMenuCheckboxItem>
-                        Refunded
-                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem>Declined</DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem>Refunded</DropdownMenuCheckboxItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    className="h-7 gap-1 text-sm"
-                  >
+                  <Button size="sm" variant="outline" className="h-7 gap-1 text-sm">
                     <File className="h-3.5 w-3.5" />
                     <span className="sr-only sm:not-sr-only">Export</span>
                   </Button>
@@ -372,24 +340,16 @@ export default function Dashboard() {
                 <Card x-chunk="dashboard-05-chunk-3">
                   <CardHeader className="px-7">
                     <CardTitle>Orders</CardTitle>
-                    <CardDescription>
-                      Recent orders from your store.
-                    </CardDescription>
+                    <CardDescription>Recent orders from your store.</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <Table>
                       <TableHeader>
                         <TableRow>
                           <TableHead>Customer</TableHead>
-                          <TableHead className="hidden sm:table-cell">
-                            Type
-                          </TableHead>
-                          <TableHead className="hidden sm:table-cell">
-                            Status
-                          </TableHead>
-                          <TableHead className="hidden md:table-cell">
-                            Date
-                          </TableHead>
+                          <TableHead className="hidden sm:table-cell">Type</TableHead>
+                          <TableHead className="hidden sm:table-cell">Status</TableHead>
+                          <TableHead className="hidden md:table-cell">Date</TableHead>
                           <TableHead className="text-right">Amount</TableHead>
                         </TableRow>
                       </TableHeader>
@@ -401,9 +361,7 @@ export default function Dashboard() {
                               liam@example.com
                             </div>
                           </TableCell>
-                          <TableCell className="hidden sm:table-cell">
-                            Sale
-                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">Sale</TableCell>
                           <TableCell className="hidden sm:table-cell">
                             <Badge className="text-xs" variant="secondary">
                               Fulfilled
@@ -421,9 +379,7 @@ export default function Dashboard() {
                               olivia@example.com
                             </div>
                           </TableCell>
-                          <TableCell className="hidden sm:table-cell">
-                            Refund
-                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">Refund</TableCell>
                           <TableCell className="hidden sm:table-cell">
                             <Badge className="text-xs" variant="outline">
                               Declined
@@ -481,9 +437,7 @@ export default function Dashboard() {
                               emma@example.com
                             </div>
                           </TableCell>
-                          <TableCell className="hidden sm:table-cell">
-                            Sale
-                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">Sale</TableCell>
                           <TableCell className="hidden sm:table-cell">
                             <Badge className="text-xs" variant="secondary">
                               Fulfilled
@@ -501,9 +455,7 @@ export default function Dashboard() {
                               liam@example.com
                             </div>
                           </TableCell>
-                          <TableCell className="hidden sm:table-cell">
-                            Sale
-                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">Sale</TableCell>
                           <TableCell className="hidden sm:table-cell">
                             <Badge className="text-xs" variant="secondary">
                               Fulfilled
@@ -521,9 +473,7 @@ export default function Dashboard() {
                               olivia@example.com
                             </div>
                           </TableCell>
-                          <TableCell className="hidden sm:table-cell">
-                            Refund
-                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">Refund</TableCell>
                           <TableCell className="hidden sm:table-cell">
                             <Badge className="text-xs" variant="outline">
                               Declined
@@ -541,9 +491,7 @@ export default function Dashboard() {
                               emma@example.com
                             </div>
                           </TableCell>
-                          <TableCell className="hidden sm:table-cell">
-                            Sale
-                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">Sale</TableCell>
                           <TableCell className="hidden sm:table-cell">
                             <Badge className="text-xs" variant="secondary">
                               Fulfilled
@@ -562,9 +510,7 @@ export default function Dashboard() {
             </Tabs>
           </div>
           <div>
-            <Card
-              className="overflow-hidden" x-chunk="dashboard-05-chunk-4"
-            >
+            <Card className="overflow-hidden" x-chunk="dashboard-05-chunk-4">
               <CardHeader className="flex flex-row items-start bg-muted/50">
                 <div className="grid gap-0.5">
                   <CardTitle className="group flex items-center gap-2 text-lg">
@@ -652,9 +598,7 @@ export default function Dashboard() {
                   </div>
                   <div className="grid auto-rows-max gap-3">
                     <div className="font-semibold">Billing Information</div>
-                    <div className="text-muted-foreground">
-                      Same as shipping address
-                    </div>
+                    <div className="text-muted-foreground">Same as shipping address</div>
                   </div>
                 </div>
                 <Separator className="my-4" />
@@ -719,5 +663,5 @@ export default function Dashboard() {
         </main>
       </div>
     </div>
-  )
+  );
 }
