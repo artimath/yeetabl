@@ -26,3 +26,12 @@ const LiveUpdate: React.FC<{}> = () => {
 };
 
 export default LiveUpdate;
+          <BarChartComponent data={dataPoints} />
+        </div>
+      </div>
+      <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">Last 10 minutes of ingestion</p>
+    </div>
+  );
+};
+
+export default LiveUpdate;
