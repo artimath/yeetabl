@@ -1,6 +1,6 @@
 import React from 'react';
 
-const LiveUpdate: React.FC = () => {
+const LiveUpdate: React.FC<{}> = () => {
   return (
     <div className="bg-gray-100 p-4 rounded-lg shadow-md">
       <h3 className="text-xl font-semibold mb-2">Live Update</h3>
