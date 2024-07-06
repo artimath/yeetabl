@@ -83,3 +83,19 @@ Thresholds are defined using a JSON structure:
 7. Test the system with real Segment event data
 
 This document provides a comprehensive overview of the project, its components, and the next steps for implementation. It should allow you to pick up where we left off and continue development of the Segment Event Threshold Monitoring System.
+
+## Dummy Data for Chart
+Here is some dummy data that can be used for the chart:
+```json
+{
+  "data": [
+    { "date": "2023-01-01", "value": 1500 },
+    { "date": "2023-01-02", "value": 1800 },
+    { "date": "2023-01-03", "value": 2100 },
+    { "date": "2023-01-04", "value": 2400 },
+    { "date": "2023-01-05", "value": 2700 },
+    { "date": "2023-01-06", "value": 3000 },
+    { "date": "2023-01-07", "value": 3300 }
+  ]
+}
+```
