@@ -1,9 +1,12 @@
 {
   "extends": [
     "next/core-web-vitals",
-    "plugin:eslint-plugin-next-on-pages/recommended"
+    "plugin:eslint-plugin-next-on-pages/recommended",
+    "plugin:@typescript-eslint/recommended",
+
+    "next",
+    "plugin:prettier/recommended"
   ],
-  "plugins": [
-    "eslint-plugin-next-on-pages"
-  ]
+  "plugins": ["eslint-plugin-next-on-pages"],
+  "parser": "@typescript-eslint/parser"
 }

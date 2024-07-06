@@ -26,10 +26,6 @@ import { Package2 } from 'lucide-react';
 export default function Dashboard() {
   return (
     <DashboardLayout>
-      <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
-        <DashboardHeader />
-        <DashboardMain />
-      </div>
       <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
         <nav className="flex flex-col items-center gap-4 px-2 sm:py-4">
           <Link
@@ -117,10 +113,9 @@ export default function Dashboard() {
       </aside>
       <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
         <DashboardHeader />
-        <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-3 xl:grid-cols-3">
-          <DashboardMain />
-          <div>
-            <Card className="overflow-hidden">
+        <DashboardMain />
+      </div>
+    </DashboardLayout>
               <CardHeader className="flex flex-row items-start bg-muted/50">
                 <div className="grid gap-0.5">
                   <CardTitle className="group flex items-center gap-2 text-lg">
