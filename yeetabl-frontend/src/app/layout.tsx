@@ -51,12 +51,14 @@ export default function RootLayout({
                       <UserButton afterSignOutUrl="/" />
                     </SignedIn>
                   </div>
-                  <ClientThemeToggle />
+                  {/* ClientThemeToggle is rendered dynamically */}
+                  <div id="theme-toggle-container"></div>
                 </header>
                 <main className="flex-grow container mx-auto py-4">
                   {children}
                 </main>
               </div>
+              <ClientThemeToggle />
             </TooltipProvider>
           </ThemeProvider>
         </ClerkProvider>
