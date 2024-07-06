@@ -11,6 +11,7 @@ import {
   SignedOut,
   UserButton
 } from '@clerk/nextjs'
+import { TooltipProvider } from "@/components/ui/tooltip"
 
 const ClientThemeToggle = dynamic(() => import('../components/ClientThemeToggle'), { ssr: false })
 
@@ -39,22 +40,24 @@ export default function RootLayout({
       >
         <ClerkProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <div className="flex min-h-screen flex-col">
-              <header className="container mx-auto p-4 flex justify-between items-center">
-                <div>
-                  <SignedOut>
-                    <SignInButton />
-                  </SignedOut>
-                  <SignedIn>
-                    <UserButton afterSignOutUrl="/" />
-                  </SignedIn>
-                </div>
-                <ClientThemeToggle />
-              </header>
-              <main className="flex-grow container mx-auto py-4">
-                {children}
-              </main>
-            </div>
+            <TooltipProvider>
+              <div className="flex min-h-screen flex-col">
+                <header className="container mx-auto p-4 flex justify-between items-center">
+                  <div>
+                    <SignedOut>
+                      <SignInButton />
+                    </SignedOut>
+                    <SignedIn>
+                      <UserButton afterSignOutUrl="/" />
+                    </SignedIn>
+                  </div>
+                  <ClientThemeToggle />
+                </header>
+                <main className="flex-grow container mx-auto py-4">
+                  {children}
+                </main>
+              </div>
+            </TooltipProvider>
           </ThemeProvider>
         </ClerkProvider>
       </body>
