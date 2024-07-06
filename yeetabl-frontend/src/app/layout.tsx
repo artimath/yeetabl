@@ -38,18 +38,20 @@ export default function RootLayout({
         )}
       >
         <ClerkProvider>
-          <ThemeProvider attribute="class">
-            <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-              <header className="p-4 flex justify-between items-center">
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <div className="flex min-h-screen flex-col">
+              <header className="container mx-auto p-4 flex justify-between items-center">
                 <SignedOut>
                   <SignInButton />
                 </SignedOut>
                 <SignedIn>
-                  <UserButton />
+                  <UserButton afterSignOutUrl="/" />
                 </SignedIn>
                 <ClientThemeToggle />
               </header>
-              <main>{children}</main>
+              <main className="flex-grow container mx-auto py-4">
+                {children}
+              </main>
             </div>
           </ThemeProvider>
         </ClerkProvider>
