@@ -1,3 +1,4 @@
+"use client"
 import Link from 'next/link'
 import LiveUpdate from '../components/LiveUpdate'
 import { ApiKeyManager } from "@/components/ApiKeyManager"
