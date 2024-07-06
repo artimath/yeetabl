@@ -21,8 +21,8 @@ export default function Home() {
         <li>Analyze trends in top customer behavior</li>
       </ul>
       <p className="text-xl font-semibold mb-4">Ready to supercharge your customer monitoring?</p>
-      <Link href="/thresholds" className="inline-block bg-blue-500 dark:bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors">
-        Start monitoring top customers →
+      <Link href="/dashboard" className="inline-block bg-blue-500 dark:bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors">
+        Go to Dashboard →
       </Link>
     </div>
   )
