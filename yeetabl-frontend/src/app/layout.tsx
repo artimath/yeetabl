@@ -33,7 +33,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class">
           <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
             <header className="p-4 flex justify-end">
-              {typeof window !== 'undefined' && <ClientThemeToggle />}
+              <ClientThemeToggle />
             </header>
             <main>{children}</main>
           </div>
