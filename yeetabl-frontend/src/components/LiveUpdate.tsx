@@ -1,4 +1,3 @@
-import { BarChartComponent } from '@/components/BarChartLiveUpdate';
 import React, { useEffect, useState } from 'react';
 import { generateDataPoints } from '@/lib/dataUtils';
 import { BarChartComponent } from '@/components/BarChartLiveUpdate';
