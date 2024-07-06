@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { generateDataPoints } from '@/lib/dataUtils';
 import { BarChartComponent } from '@/components/BarChartLiveUpdate';
 
-const LiveUpdate: React.FC<{}> = () => {
+const LiveUpdate: React.FC = () => {
   const [dataPoints, setDataPoints] = useState([]);
 
   useEffect(() => {
@@ -14,9 +14,11 @@ const LiveUpdate: React.FC<{}> = () => {
   return (
     <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg shadow-md">
       <h3 className="text-xl font-semibold mb-2">Live Update</h3>
-      <p className="text-lg mb-4">Currently processing <span className="font-bold">1,234,567</span> events/second</p>
-      <div className=" bg-white dark:bg-gray-700 rounded-md p-2">
-        <div className="w-full">
+      <p className="text-lg mb-4">
+        Currently processing <span className="font-bold">1,234,567</span> events/second
+      </p>
+      <div className="h-64 bg-white dark:bg-gray-700 rounded-md p-2">
+        <div className="w-full h-full">
           <BarChartComponent data={dataPoints} />
         </div>
       </div>
