@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from 'next-themes'
-import ThemeToggle from '../components/ThemeToggle'
+import dynamic from 'next/dynamic'
+
+const ClientThemeToggle = dynamic(() => import('../components/ClientThemeToggle'), { ssr: false })
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +24,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class">
           <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
             <header className="p-4 flex justify-end">
-              <ThemeToggle />
+              <ClientThemeToggle />
             </header>
             <main>{children}</main>
           </div>
