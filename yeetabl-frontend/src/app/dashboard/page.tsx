@@ -116,7 +116,6 @@ export default function Dashboard() {
         <DashboardMain />
       </div>
     </DashboardLayout>
-              <CardHeader className="flex flex-row items-start bg-muted/50">
                 <div className="grid gap-0.5">
                   <CardTitle className="group flex items-center gap-2 text-lg">
                     Order Oe31b70H
