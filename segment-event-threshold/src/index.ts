@@ -1,8 +1,8 @@
 import { OpenAPIRouter } from "@cloudflare/itty-router-openapi";
-import { TaskCreate } from "./endpoints/taskCreate";
-import { TaskDelete } from "./endpoints/taskDelete";
-import { TaskFetch } from "./endpoints/taskFetch";
-import { TaskList } from "./endpoints/taskList";
+import { TaskCreate } from "./endpoints/task/taskCreate";
+import { TaskDelete } from "./endpoints/task/taskDelete";
+import { TaskFetch } from "./endpoints/task/taskFetch";
+import { TaskList } from "./endpoints/task/taskList";
 
 export const router = OpenAPIRouter({
 	docs_url: "/",

@@ -5,6 +5,7 @@
     "plugin:@typescript-eslint/recommended",
 
     "next",
+    "prettier",
     "plugin:prettier/recommended"
   ],
   "plugins": ["eslint-plugin-next-on-pages"],

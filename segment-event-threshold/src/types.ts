@@ -7,3 +7,8 @@ export const Task = {
 	completed: Boolean,
 	due_date: new DateTime(),
 };
+
+export const ApiKey = {
+	name: String,
+	key: String,
+};

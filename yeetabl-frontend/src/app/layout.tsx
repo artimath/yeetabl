@@ -1,29 +1,24 @@
-import type { Metadata } from "next";
-import { Inter as FontSans } from "next/font/google";
-import "./globals.css";
-import { cn } from "@/lib/utils";
-import { ThemeProvider } from 'next-themes'
-import dynamic from 'next/dynamic'
-import {
-  ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton
-} from '@clerk/nextjs'
-import { TooltipProvider } from "@/components/ui/tooltip"
+import { Inter as FontSans } from 'next/font/google';
+import './globals.css';
+import { cn } from '@/lib/utils';
+import { ThemeProvider } from 'next-themes';
+import { ClerkProvider } from '@clerk/nextjs';
+import { TooltipProvider } from '@/components/ui/tooltip';
+import Analytics from '@/components/analytics';
 
-const ClientThemeToggle = dynamic(() => import('../components/ClientThemeToggle'), { ssr: false })
+// const ClientThemeToggle = dynamic(() => import('../components/ClientThemeToggle'), {
+//   ssr: false,
+// });
 
 const fontSans = FontSans({
-  subsets: ["latin"],
-  variable: "--font-sans",
+  subsets: ['latin'],
+  variable: '--font-sans',
 });
 
-export const metadata: Metadata = {
-  title: "Yeetable - Keep Tabs on Your Top Customers",
-  description: "Monitor your most valuable customers in real-time",
-};
+// export const metadata: Metadata = {
+//   title: 'Yeetable - Keep Tabs on Your Top Customers',
+//   description: 'Monitor your most valuable customers in real-time',
+// };
 
 export default function RootLayout({
   children,
@@ -32,35 +27,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable
-        )}
-      >
-        <ClerkProvider>
+      <ClerkProvider>
+        <body
+          className={cn(
+            'min-h-screen bg-background font-sans antialiased',
+            fontSans.variable,
+          )}
+        >
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <TooltipProvider>
-              <div className="flex min-h-screen flex-col">
-                <header className="container mx-auto p-4 flex justify-between items-center">
-                  <div>
-                    <SignedOut>
-                      <SignInButton />
-                    </SignedOut>
-                    <SignedIn>
-                      <UserButton afterSignOutUrl="/" />
-                    </SignedIn>
-                  </div>
-                  <ClientThemeToggle />
-                </header>
-                <main className="flex-grow container mx-auto py-4">
-                  {children}
-                </main>
-              </div>
+              {children}
+              {/* <ClientThemeToggle /> */}
             </TooltipProvider>
           </ThemeProvider>
-        </ClerkProvider>
-      </body>
+        </body>
+        <Analytics />
+      </ClerkProvider>
     </html>
   );
 }

@@ -1,4 +1,9 @@
-export function generateDataPoints(startDate: string, numDays: number, startValue: number, increment: number) {
+export function generateDataPoints(
+  startDate: string,
+  numDays: number,
+  startValue: number,
+  increment: number,
+) {
   const dataPoints = [];
   let currentDate = new Date(startDate);
   let currentValue = startValue;

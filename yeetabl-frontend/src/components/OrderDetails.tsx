@@ -1,9 +1,19 @@
 'use client';
 
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { Pagination, PaginationContent, PaginationItem } from '@/components/ui/pagination';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+} from '@/components/ui/pagination';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,7 +21,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Copy, Truck, MoreVertical, CreditCard, ChevronLeft, ChevronRight } from 'lucide-react';
+import {
+  Copy,
+  Truck,
+  MoreVertical,
+  CreditCard,
+  ChevronLeft,
+  ChevronRight,
+} from 'lucide-react';
 
 export function OrderDetails() {
   return (
@@ -54,9 +71,7 @@ export function OrderDetails() {
           </DropdownMenu>
         </div>
       </CardHeader>
-      <CardContent className="p-6 text-sm">
-        {/* Order details content */}
-      </CardContent>
+      <CardContent className="p-6 text-sm">{/* Order details content */}</CardContent>
       <CardFooter className="flex flex-row items-center border-t bg-muted/50 px-6 py-3">
         <div className="text-xs text-muted-foreground">
           Updated <time dateTime="2023-11-23">November 23, 2023</time>

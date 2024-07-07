@@ -1,6 +1,12 @@
 'use client';
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -42,9 +48,7 @@ export function RecentOrders() {
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Filter by</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuCheckboxItem checked>
-                Fulfilled
-              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem checked>Fulfilled</DropdownMenuCheckboxItem>
               <DropdownMenuCheckboxItem>Declined</DropdownMenuCheckboxItem>
               <DropdownMenuCheckboxItem>Refunded</DropdownMenuCheckboxItem>
             </DropdownMenuContent>
@@ -72,9 +76,7 @@ export function RecentOrders() {
                   <TableHead className="text-right">Amount</TableHead>
                 </TableRow>
               </TableHeader>
-              <TableBody>
-                {/* Table rows here */}
-              </TableBody>
+              <TableBody>{/* Table rows here */}</TableBody>
             </Table>
           </CardContent>
         </Card>
