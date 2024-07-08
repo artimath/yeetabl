@@ -24,10 +24,17 @@ export function CompositeIndexBuilder() {
     setFields(fields.filter((_, i) => i !== index));
   };
 
-  const createIndex = () => {
-    // Here you would implement the logic to create the index
-    console.log('Creating index with fields:', fields);
-    // You might want to send this data to your backend API
+  const createIndex = async () => {
+    try {
+      // Here you would implement the logic to create the index
+      console.log('Creating index with fields:', fields);
+      // You might want to send this data to your backend API
+      // await api.createCompositeIndex(fields);
+      // Show success message
+    } catch (error) {
+      console.error('Failed to create index:', error);
+      // Show error message
+    }
   };
 
   return (
@@ -40,7 +47,7 @@ export function CompositeIndexBuilder() {
         />
         <Select
           value={newFieldType}
-          onValueChange={(value) => setNewFieldType(value as IndexField['type'])}
+          onValueChange={(value: string) => setNewFieldType(value as IndexField['type'])}
         >
           <Select.Option value="record">Record</Select.Option>
           <Select.Option value="metric">Metric</Select.Option>
