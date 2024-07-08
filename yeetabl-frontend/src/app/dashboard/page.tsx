@@ -4,6 +4,7 @@ import { DashboardLayout } from '../../components/DashboardLayout';
 import CustomerValueIndexBuilder from '../../components/CustomerValueIndexBuilder';
 import CompositeIndexWebhookBuilder from '../../components/CompositeIndexWebhookBuilder';
 import { SchemaViewer } from '../../components/SchemaViewer';
+import { CompiledMetrics } from '../../components/CompiledMetrics';
 
 export default function Dashboard() {
   return (
@@ -11,8 +12,16 @@ export default function Dashboard() {
       <ApiKeyManager />
       <h2 className="text-2xl font-bold mt-8 mb-4">Customer Health Score Management</h2>
       <CompositeIndexWebhookBuilder />
-      <h2 className="text-2xl font-bold mt-8 mb-4">Event Tables Schema</h2>
-      <SchemaViewer />
+      <div className="flex mt-8 space-x-8">
+        <div className="w-1/2">
+          <h2 className="text-2xl font-bold mb-4">Compiled Metrics</h2>
+          <CompiledMetrics />
+        </div>
+        <div className="w-1/2">
+          <h2 className="text-2xl font-bold mb-4">Event Tables Schema</h2>
+          <SchemaViewer />
+        </div>
+      </div>
     </DashboardLayout>
   );
 }
