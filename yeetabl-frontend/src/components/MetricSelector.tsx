@@ -41,11 +41,12 @@ const MetricSelector: React.FC<MetricSelectorProps> = ({ onAddMetric }) => {
   };
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center space-x-2">
-        <Label>IF</Label>
+    <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+      <fieldset className="flex items-center space-x-2">
+        <legend className="sr-only">Metric Selection</legend>
+        <Label htmlFor="aggregation">IF</Label>
         <Select value={aggregation} onValueChange={setAggregation}>
-          <SelectTrigger className="w-[100px]">
+          <SelectTrigger className="w-[100px]" id="aggregation">
             <SelectValue placeholder="Select aggregation" />
           </SelectTrigger>
           <SelectContent>
@@ -56,7 +57,7 @@ const MetricSelector: React.FC<MetricSelectorProps> = ({ onAddMetric }) => {
             <SelectItem value="max">MAX</SelectItem>
           </SelectContent>
         </Select>
-        <Label>of</Label>
+        <Label htmlFor="metric">of</Label>
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
             <Button
@@ -64,6 +65,7 @@ const MetricSelector: React.FC<MetricSelectorProps> = ({ onAddMetric }) => {
               role="combobox"
               aria-expanded={open}
               className="w-[200px] justify-between"
+              id="metric"
             >
               {metricName
                 ? dummyMetrics.find((metric) => metric.name === metricName)?.name
@@ -97,9 +99,9 @@ const MetricSelector: React.FC<MetricSelectorProps> = ({ onAddMetric }) => {
             </Command>
           </PopoverContent>
         </Popover>
-        <Label>in a</Label>
+        <Label htmlFor="timePeriod">in a</Label>
         <Select value={timePeriod} onValueChange={setTimePeriod}>
-          <SelectTrigger className="w-[100px]">
+          <SelectTrigger className="w-[100px]" id="timePeriod">
             <SelectValue placeholder="Select time period" />
           </SelectTrigger>
           <SelectContent>
@@ -110,9 +112,9 @@ const MetricSelector: React.FC<MetricSelectorProps> = ({ onAddMetric }) => {
           </SelectContent>
         </Select>
         <Label>PERIOD</Label>
-      </div>
-      <Button onClick={handleAddMetric}>Add Metric</Button>
-    </div>
+      </fieldset>
+      <Button onClick={handleAddMetric} aria-label="Add selected metric">Add Metric</Button>
+    </form>
   );
 };
 
