@@ -2,22 +2,33 @@ import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "./ui/card";
 import { Button } from "./ui/button";
 import WebhookConfigurator from './WebhookConfigurator';
+import MetricSelector from './MetricSelector';
 
-// TODO: Import these sub-components once they're created
-// import MetricSelector from './MetricSelector';
+// TODO: Import this sub-component once it's created
 // import ThresholdSetter from './ThresholdSetter';
+
+interface Metric {
+  id: string;
+  name: string;
+  aggregation: string;
+}
 
 const CompositeIndexWebhookBuilder: React.FC = () => {
   const [webhookConfigs, setWebhookConfigs] = useState<any[]>([]);
   const [showWebhookConfigurator, setShowWebhookConfigurator] = useState(false);
+  const [metrics, setMetrics] = useState<Metric[]>([]);
 
   const handleConfigureWebhook = (config: any) => {
     setWebhookConfigs([...webhookConfigs, config]);
     setShowWebhookConfigurator(false);
   };
 
+  const handleAddMetric = (metric: Metric) => {
+    setMetrics([...metrics, metric]);
+  };
+
   const handleSave = () => {
-    console.log('Saving configuration:', { webhookConfigs });
+    console.log('Saving configuration:', { metrics, webhookConfigs });
     // TODO: Implement actual save functionality
   };
 
@@ -29,16 +40,26 @@ const CompositeIndexWebhookBuilder: React.FC = () => {
       </CardHeader>
       <CardContent>
         {/* Metric Selection Section */}
-        <div>
-          <h3>Select Metrics</h3>
-          {/* TODO: Implement MetricSelector component */}
-          {/* <MetricSelector onAddMetric={handleAddMetric} /> */}
-          {/* TODO: Display selected metrics */}
+        <div className="mb-6">
+          <h3 className="text-lg font-semibold mb-2">Select Metrics</h3>
+          <MetricSelector onAddMetric={handleAddMetric} />
+          {metrics.length > 0 && (
+            <div className="mt-4">
+              <h4 className="text-md font-semibold mb-2">Selected Metrics:</h4>
+              <ul className="list-disc pl-5">
+                {metrics.map((metric) => (
+                  <li key={metric.id}>
+                    {metric.name} ({metric.aggregation})
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
 
         {/* Threshold Setting Section */}
-        <div>
-          <h3>Set Thresholds</h3>
+        <div className="mb-6">
+          <h3 className="text-lg font-semibold mb-2">Set Thresholds</h3>
           {/* TODO: Implement ThresholdSetter component */}
           {/* <ThresholdSetter metrics={metrics} onSetThreshold={handleSetThreshold} /> */}
         </div>
