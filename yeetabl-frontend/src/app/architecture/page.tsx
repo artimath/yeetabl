@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import CostGraph from '@/components/CostGraph';
 
 const ArchitecturePage: React.FC = () => {
   return (
@@ -71,6 +72,9 @@ const ArchitecturePage: React.FC = () => {
             These estimates assume efficient code and optimized queries. Actual costs may
             vary based on processing complexity.
           </p>
+          <div className="mt-4">
+            <CostGraph />
+          </div>
         </CardContent>
       </Card>
     </div>
