@@ -37,7 +37,7 @@ export default function Dashboard() {
             <CompiledMetrics currentTable={currentTable} timeRange={timeRange} onTimeRangeChange={handleTimeRangeChange} />
           </div>
         </div>
-        <div>
+        <div className="pt-4">
           <h2 className="text-2xl font-bold mb-4">Threshold Monitor</h2>
           <ThresholdMonitor />
         </div>
