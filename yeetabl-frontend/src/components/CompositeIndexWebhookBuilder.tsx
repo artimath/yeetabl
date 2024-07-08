@@ -57,11 +57,7 @@ const CompositeIndexWebhookBuilder: React.FC = () => {
             <div key={index} className="mb-2">
               Webhook {index + 1}: 
               {config.type === 'endpoint' && `Endpoint: ${config.endpoint}`}
-              {config.type === 'slack' && (
-                <Button variant="outline" size="sm">
-                  Connect to Slack (OAuth)
-                </Button>
-              )}
+              {config.type === 'slack' && 'Slack: Connected'}
               {config.type === 'email' && `Email: ${config.email}`}
               {config.type === 'sms' && `Phone: ${config.phoneNumber}`}
             </div>

@@ -77,14 +77,9 @@ const WebhookConfigurator: React.FC<WebhookConfiguratorProps> = ({ onConfigureWe
 
         {webhookType === 'slack' && (
           <div className="mb-4">
-            <Label htmlFor="slackWebhook">Slack Webhook URL</Label>
-            <Input
-              id="slackWebhook"
-              name="slackWebhook"
-              value={config.slackWebhook || ''}
-              onChange={handleInputChange}
-              placeholder="https://hooks.slack.com/services/..."
-            />
+            <Button variant="outline" onClick={() => console.log("Connect to Slack")}>
+              Connect to Slack (OAuth)
+            </Button>
           </div>
         )}
 
