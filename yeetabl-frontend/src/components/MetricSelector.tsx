@@ -3,6 +3,7 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import { dummyMetrics } from '../dummyData';
 
 interface Metric {
   id: string;
@@ -23,6 +24,9 @@ const MetricSelector: React.FC<MetricSelectorProps> = ({ onAddMetric }) => {
   const [eventName, setEventName] = useState('');
   const [propertyName, setPropertyName] = useState('');
   const [aggregation, setAggregation] = useState('sum');
+
+  const eventNames = [...new Set(dummyMetrics.filter(m => m.type === 'event').map(m => m.eventName))];
+  const propertyNames = [...new Set(dummyMetrics.filter(m => m.type === 'property').map(m => m.propertyName))];
 
   const handleAddMetric = () => {
     if (metricName.trim()) {
@@ -52,7 +56,13 @@ const MetricSelector: React.FC<MetricSelectorProps> = ({ onAddMetric }) => {
           value={metricName}
           onChange={(e) => setMetricName(e.target.value)}
           placeholder="Enter metric name"
+          list="metricNames"
         />
+        <datalist id="metricNames">
+          {dummyMetrics.map((metric) => (
+            <option key={metric.id} value={metric.name} />
+          ))}
+        </datalist>
       </div>
       <div className="space-y-2">
         <Label htmlFor="metricType">Metric Type</Label>
@@ -74,7 +84,13 @@ const MetricSelector: React.FC<MetricSelectorProps> = ({ onAddMetric }) => {
             value={eventName}
             onChange={(e) => setEventName(e.target.value)}
             placeholder="Enter event name"
+            list="eventNames"
           />
+          <datalist id="eventNames">
+            {eventNames.map((name) => (
+              <option key={name} value={name} />
+            ))}
+          </datalist>
         </div>
       )}
       {metricType === 'property' && (
@@ -85,7 +101,13 @@ const MetricSelector: React.FC<MetricSelectorProps> = ({ onAddMetric }) => {
             value={propertyName}
             onChange={(e) => setPropertyName(e.target.value)}
             placeholder="Enter property name"
+            list="propertyNames"
           />
+          <datalist id="propertyNames">
+            {propertyNames.map((name) => (
+              <option key={name} value={name} />
+            ))}
+          </datalist>
         </div>
       )}
       <div className="space-y-2">

@@ -4,6 +4,7 @@ import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { RadioGroup, RadioGroupItem } from './ui/radio-group';
 import { Button } from './ui/button';
+import { dummyWebhookEndpoints, dummyEmails, dummyPhoneNumbers } from '../dummyData';
 
 type WebhookType = 'endpoint' | 'slack' | 'email' | 'sms';
 
@@ -74,7 +75,13 @@ const WebhookConfigurator: React.FC<WebhookConfiguratorProps> = ({
               value={config.endpoint || ''}
               onChange={handleInputChange}
               placeholder="https://api.example.com/webhook"
+              list="endpointUrls"
             />
+            <datalist id="endpointUrls">
+              {dummyWebhookEndpoints.map((url, index) => (
+                <option key={index} value={url} />
+              ))}
+            </datalist>
           </div>
         )}
 
@@ -96,7 +103,13 @@ const WebhookConfigurator: React.FC<WebhookConfiguratorProps> = ({
               value={config.email || ''}
               onChange={handleInputChange}
               placeholder="alerts@example.com"
+              list="emailAddresses"
             />
+            <datalist id="emailAddresses">
+              {dummyEmails.map((email, index) => (
+                <option key={index} value={email} />
+              ))}
+            </datalist>
           </div>
         )}
 
@@ -110,7 +123,13 @@ const WebhookConfigurator: React.FC<WebhookConfiguratorProps> = ({
               value={config.phoneNumber || ''}
               onChange={handleInputChange}
               placeholder="+1234567890"
+              list="phoneNumbers"
             />
+            <datalist id="phoneNumbers">
+              {dummyPhoneNumbers.map((number, index) => (
+                <option key={index} value={number} />
+              ))}
+            </datalist>
           </div>
         )}
 
