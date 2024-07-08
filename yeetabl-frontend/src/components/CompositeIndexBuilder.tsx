@@ -9,13 +9,14 @@ import {
   SelectValue,
 } from './ui/select';
 
-type Operator = '>' | '>=' | '=' | '<' | '<=';
-type AggregationFunction = 'sum' | 'average' | 'count' | 'min' | 'max';
+type Operator = '>' | '>=' | '=' | '<' | '<=' | 'decreased_by' | 'increased_by';
+type AggregationFunction = 'sum' | 'average' | 'count' | 'min' | 'max' | 'percent_change';
 
 type Condition = {
   field: string;
   operator: Operator;
   value: number;
+  comparisonPeriod?: string;
 };
 
 type Aggregation = {
@@ -27,15 +28,16 @@ type Aggregation = {
 type Threshold = {
   name: string;
   conditions: Condition[];
-  aggregation: Aggregation;
+  aggregations: Aggregation[];
   triggerValue: number;
+  consecutivePeriods?: number;
 };
 
 export function ThresholdBuilder() {
   const [threshold, setThreshold] = useState<Threshold>({
     name: '',
     conditions: [],
-    aggregation: { field: '', function: 'sum', timeWindow: '1d' },
+    aggregations: [{ field: '', function: 'sum', timeWindow: '1d' }],
     triggerValue: 0,
   });
 
@@ -43,6 +45,7 @@ export function ThresholdBuilder() {
     field: '',
     operator: '>',
     value: 0,
+    comparisonPeriod: '',
   });
 
   const addCondition = () => {
