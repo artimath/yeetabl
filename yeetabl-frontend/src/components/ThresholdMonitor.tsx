@@ -118,11 +118,25 @@ export const ThresholdMonitor: React.FC = () => {
   const [editingThreshold, setEditingThreshold] = useState<any | null>(null);
 
   const handleEditThreshold = (threshold: any) => {
-    setThresholdGroups([threshold.rootGroup]);
+    const flattenGroup = (group: ThresholdGroup): ThresholdGroup => ({
+      ...group,
+      items: group.items.map(item => 
+        'operator' in item ? flattenGroup(item) : item
+      )
+    });
+
+    setThresholdGroups([flattenGroup(threshold.rootGroup)]);
     setThresholdName(threshold.name);
     setNotifications(threshold.notifications || []);
     setIsCreating(true);
     setEditingThreshold(threshold);
+    setNewCondition({
+      id: '',
+      metric: '',
+      condition: 'greater',
+      value: 0,
+      timeFrame: 'anytime',
+    });
   };
 
   const saveThreshold = () => {
@@ -274,6 +288,19 @@ export const ThresholdMonitor: React.FC = () => {
     }
   };
 
+  const handleUpdateCondition = (groupId: string, conditionId: string, field: string, value: any) => {
+    setThresholdGroups((groups) =>
+      updateGroup(groups, groupId, (group) => ({
+        ...group,
+        items: group.items.map((item) =>
+          'metric' in item && item.id === conditionId
+            ? { ...item, [field]: value }
+            : item
+        ),
+      }))
+    );
+  };
+
   const handleChangeOperator = (groupId: string, operator: 'AND' | 'OR') => {
     setThresholdGroups((groups) =>
       updateGroup(groups, groupId, (group) => ({ ...group, operator })),
@@ -353,24 +380,57 @@ export const ThresholdMonitor: React.FC = () => {
             ) : (
               <Card key={item.id}>
                 <CardContent className="flex items-center justify-between p-4">
-                  <span>
-                    If {item.metric}{' '}
-                    {item.metric === 'service_type' ? 'is' : item.condition}{' '}
-                    {item.metric === 'service_type' ? (
-                      <strong>{item.value}</strong>
-                    ) : (
-                      <>
-                        <strong>
-                          {item.value}
-                          {item.metric === 'monthly_cost' ? '$' : ''}
-                          {item.condition === 'increase' || item.condition === 'decrease'
-                            ? '%'
-                            : ''}
-                        </strong>
-                      </>
-                    )}{' '}
-                    {item.timeFrame !== 'anytime' && item.timeFrame}
-                  </span>
+                  <div className="flex items-center space-x-2">
+                    <Select
+                      value={item.metric}
+                      onValueChange={(value) => handleUpdateCondition(group.id, item.id, 'metric', value)}
+                    >
+                      <SelectTrigger className="w-[200px]">
+                        <SelectValue placeholder="Select metric" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="daily_active_users">Daily Active Users</SelectItem>
+                        <SelectItem value="average_response_time">Average Response Time</SelectItem>
+                        <SelectItem value="total_revenue">Total Revenue</SelectItem>
+                        <SelectItem value="users_in_team">Users in Team</SelectItem>
+                        <SelectItem value="usage_volume">Usage Volume</SelectItem>
+                        <SelectItem value="monthly_cost">Monthly Cost</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <Select
+                      value={item.condition}
+                      onValueChange={(value) => handleUpdateCondition(group.id, item.id, 'condition', value)}
+                    >
+                      <SelectTrigger className="w-[150px]">
+                        <SelectValue placeholder="Condition" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="greater">is greater than</SelectItem>
+                        <SelectItem value="less">is less than</SelectItem>
+                        <SelectItem value="increase">% increase</SelectItem>
+                        <SelectItem value="decrease">% decrease</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <Input
+                      type="number"
+                      value={item.value}
+                      onChange={(e) => handleUpdateCondition(group.id, item.id, 'value', parseFloat(e.target.value))}
+                      className="w-[100px]"
+                    />
+                    <Select
+                      value={item.timeFrame}
+                      onValueChange={(value) => handleUpdateCondition(group.id, item.id, 'timeFrame', value)}
+                    >
+                      <SelectTrigger className="w-[150px]">
+                        <SelectValue placeholder="Time Frame" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="anytime">at any time</SelectItem>
+                        <SelectItem value="24h">for 24 hours</SelectItem>
+                        <SelectItem value="7d">for 7 days</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                   <Button
                     variant="destructive"
                     onClick={() => handleRemoveCondition(group.id, item.id)}
