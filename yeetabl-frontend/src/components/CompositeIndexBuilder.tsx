@@ -34,7 +34,7 @@ type Threshold = {
   consecutivePeriods?: number;
 };
 
-export function ThresholdBuilder() {
+export function CompositeIndexBuilder() {
   const [threshold, setThreshold] = useState<Threshold>({
     name: '',
     conditions: [],
@@ -98,6 +98,9 @@ export function ThresholdBuilder() {
               <CardTitle>Conditions</CardTitle>
             </CardHeader>
             <CardContent>
+              <p className="text-sm text-gray-500 mb-2">
+                Define conditions that will trigger this threshold.
+              </p>
               <div className="flex flex-wrap gap-2 mb-4">
                 <Input
                   placeholder="Field"
@@ -160,6 +163,9 @@ export function ThresholdBuilder() {
               <CardTitle>Aggregations</CardTitle>
             </CardHeader>
             <CardContent>
+              <p className="text-sm text-gray-500 mb-2">
+                Define how data should be aggregated for this threshold.
+              </p>
               {threshold.aggregations.map((aggregation, index) => (
                 <div key={index} className="flex flex-wrap gap-2 mb-4">
                   <Input
@@ -226,6 +232,9 @@ export function ThresholdBuilder() {
               <CardTitle>Trigger Settings</CardTitle>
             </CardHeader>
             <CardContent>
+              <p className="text-sm text-gray-500 mb-2">
+                Set the value that will trigger this threshold and how many consecutive periods it should occur.
+              </p>
               <div className="flex flex-wrap gap-2">
                 <Input
                   type="number"
