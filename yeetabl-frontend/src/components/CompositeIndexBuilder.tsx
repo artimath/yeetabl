@@ -97,7 +97,7 @@ export function ThresholdBuilder() {
             value={newCondition.operator}
             onValueChange={(value) => setNewCondition({ ...newCondition, operator: value as Operator })}
           >
-            <SelectTrigger className="w-[100px]">
+            <SelectTrigger className="w-[140px]">
               <SelectValue placeholder="Operator" />
             </SelectTrigger>
             <SelectContent>
@@ -106,6 +106,8 @@ export function ThresholdBuilder() {
               <SelectItem value="=">{'='}</SelectItem>
               <SelectItem value="<">{'<'}</SelectItem>
               <SelectItem value="<=">{'≤'}</SelectItem>
+              <SelectItem value="decreased_by">Decreased by</SelectItem>
+              <SelectItem value="increased_by">Increased by</SelectItem>
             </SelectContent>
           </Select>
           <Input
@@ -114,6 +116,13 @@ export function ThresholdBuilder() {
             value={newCondition.value}
             onChange={(e) => setNewCondition({ ...newCondition, value: Number(e.target.value) })}
           />
+          {(newCondition.operator === 'decreased_by' || newCondition.operator === 'increased_by') && (
+            <Input
+              placeholder="Comparison Period"
+              value={newCondition.comparisonPeriod || ''}
+              onChange={(e) => setNewCondition({ ...newCondition, comparisonPeriod: e.target.value })}
+            />
+          )}
           <Button onClick={addCondition}>Add Condition</Button>
         </div>
         <ul className="space-y-2">
@@ -130,43 +139,63 @@ export function ThresholdBuilder() {
         </ul>
       </div>
       <div className="space-y-2">
-        <h3 className="text-lg font-semibold">Aggregation</h3>
-        <div className="flex space-x-2">
-          <Input
-            placeholder="Field"
-            value={threshold.aggregation.field}
-            onChange={(e) => setThreshold({
-              ...threshold,
-              aggregation: { ...threshold.aggregation, field: e.target.value },
-            })}
-          />
-          <Select
-            value={threshold.aggregation.function}
-            onValueChange={(value) => setThreshold({
-              ...threshold,
-              aggregation: { ...threshold.aggregation, function: value as AggregationFunction },
-            })}
-          >
-            <SelectTrigger className="w-[120px]">
-              <SelectValue placeholder="Function" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="sum">Sum</SelectItem>
-              <SelectItem value="average">Average</SelectItem>
-              <SelectItem value="count">Count</SelectItem>
-              <SelectItem value="min">Min</SelectItem>
-              <SelectItem value="max">Max</SelectItem>
-            </SelectContent>
-          </Select>
-          <Input
-            placeholder="Time Window (e.g., 1d, 7d)"
-            value={threshold.aggregation.timeWindow}
-            onChange={(e) => setThreshold({
-              ...threshold,
-              aggregation: { ...threshold.aggregation, timeWindow: e.target.value },
-            })}
-          />
-        </div>
+        <h3 className="text-lg font-semibold">Aggregations</h3>
+        {threshold.aggregations.map((aggregation, index) => (
+          <div key={index} className="flex space-x-2">
+            <Input
+              placeholder="Field"
+              value={aggregation.field}
+              onChange={(e) => {
+                const newAggregations = [...threshold.aggregations];
+                newAggregations[index] = { ...aggregation, field: e.target.value };
+                setThreshold({ ...threshold, aggregations: newAggregations });
+              }}
+            />
+            <Select
+              value={aggregation.function}
+              onValueChange={(value) => {
+                const newAggregations = [...threshold.aggregations];
+                newAggregations[index] = { ...aggregation, function: value as AggregationFunction };
+                setThreshold({ ...threshold, aggregations: newAggregations });
+              }}
+            >
+              <SelectTrigger className="w-[120px]">
+                <SelectValue placeholder="Function" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="sum">Sum</SelectItem>
+                <SelectItem value="average">Average</SelectItem>
+                <SelectItem value="count">Count</SelectItem>
+                <SelectItem value="min">Min</SelectItem>
+                <SelectItem value="max">Max</SelectItem>
+                <SelectItem value="percent_change">Percent Change</SelectItem>
+              </SelectContent>
+            </Select>
+            <Input
+              placeholder="Time Window (e.g., 1d, 7d)"
+              value={aggregation.timeWindow}
+              onChange={(e) => {
+                const newAggregations = [...threshold.aggregations];
+                newAggregations[index] = { ...aggregation, timeWindow: e.target.value };
+                setThreshold({ ...threshold, aggregations: newAggregations });
+              }}
+            />
+            <Button variant="destructive" onClick={() => {
+              const newAggregations = threshold.aggregations.filter((_, i) => i !== index);
+              setThreshold({ ...threshold, aggregations: newAggregations });
+            }}>
+              Remove
+            </Button>
+          </div>
+        ))}
+        <Button onClick={() => {
+          setThreshold({
+            ...threshold,
+            aggregations: [...threshold.aggregations, { field: '', function: 'sum', timeWindow: '1d' }]
+          });
+        }}>
+          Add Aggregation
+        </Button>
       </div>
       <div className="space-y-2">
         <h3 className="text-lg font-semibold">Trigger Value</h3>
