@@ -53,7 +53,7 @@ export function CompositeIndexBuilder() {
         />
         <Select
           value={newFieldType}
-          onValueChange={(value: IndexField['type']) => setNewFieldType(value)}
+          onValueChange={(value) => setNewFieldType(value as IndexField['type'])}
         >
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="Select a field type" />
