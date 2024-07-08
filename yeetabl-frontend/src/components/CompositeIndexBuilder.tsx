@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
-import { Select } from './ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from './ui/select';
 
 type IndexField = {
   name: string;
@@ -49,9 +55,14 @@ export function CompositeIndexBuilder() {
           value={newFieldType}
           onValueChange={(value: IndexField['type']) => setNewFieldType(value)}
         >
-          <Select.Option value="record">Record</Select.Option>
-          <Select.Option value="metric">Metric</Select.Option>
-          <Select.Option value="aggregate">Aggregate</Select.Option>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Select a field type" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="record">Record</SelectItem>
+            <SelectItem value="metric">Metric</SelectItem>
+            <SelectItem value="aggregate">Aggregate</SelectItem>
+          </SelectContent>
         </Select>
         <Button onClick={addField}>Add Field</Button>
       </div>
