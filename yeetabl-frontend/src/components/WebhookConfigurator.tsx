@@ -17,9 +17,10 @@ interface WebhookConfig {
 
 interface WebhookConfiguratorProps {
   onConfigureWebhook: (config: WebhookConfig) => void;
+  onCancel: () => void;
 }
 
-const WebhookConfigurator: React.FC<WebhookConfiguratorProps> = ({ onConfigureWebhook }) => {
+const WebhookConfigurator: React.FC<WebhookConfiguratorProps> = ({ onConfigureWebhook, onCancel }) => {
   const [webhookType, setWebhookType] = useState<WebhookType>('endpoint');
   const [config, setConfig] = useState<WebhookConfig>({ type: 'endpoint' });
 
@@ -42,7 +43,7 @@ const WebhookConfigurator: React.FC<WebhookConfiguratorProps> = ({ onConfigureWe
         <CardTitle>Configure Webhook</CardTitle>
       </CardHeader>
       <CardContent>
-        <RadioGroup value={webhookType} onValueChange={handleTypeChange}>
+        <RadioGroup value={webhookType} onValueChange={handleTypeChange} className="mb-4">
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="endpoint" id="endpoint" />
             <Label htmlFor="endpoint">Custom Endpoint</Label>
@@ -62,7 +63,7 @@ const WebhookConfigurator: React.FC<WebhookConfiguratorProps> = ({ onConfigureWe
         </RadioGroup>
 
         {webhookType === 'endpoint' && (
-          <div className="mt-4">
+          <div className="mb-4">
             <Label htmlFor="endpoint">Endpoint URL</Label>
             <Input
               id="endpoint"
@@ -75,7 +76,7 @@ const WebhookConfigurator: React.FC<WebhookConfiguratorProps> = ({ onConfigureWe
         )}
 
         {webhookType === 'slack' && (
-          <div className="mt-4">
+          <div className="mb-4">
             <Label htmlFor="slackWebhook">Slack Webhook URL</Label>
             <Input
               id="slackWebhook"
@@ -88,7 +89,7 @@ const WebhookConfigurator: React.FC<WebhookConfiguratorProps> = ({ onConfigureWe
         )}
 
         {webhookType === 'email' && (
-          <div className="mt-4">
+          <div className="mb-4">
             <Label htmlFor="email">Email Address</Label>
             <Input
               id="email"
@@ -102,7 +103,7 @@ const WebhookConfigurator: React.FC<WebhookConfiguratorProps> = ({ onConfigureWe
         )}
 
         {webhookType === 'sms' && (
-          <div className="mt-4">
+          <div className="mb-4">
             <Label htmlFor="phoneNumber">Phone Number</Label>
             <Input
               id="phoneNumber"
@@ -115,7 +116,10 @@ const WebhookConfigurator: React.FC<WebhookConfiguratorProps> = ({ onConfigureWe
           </div>
         )}
 
-        <Button className="mt-4" onClick={handleSave}>Save Webhook Configuration</Button>
+        <div className="flex justify-end space-x-2">
+          <Button variant="outline" onClick={onCancel}>Cancel</Button>
+          <Button onClick={handleSave}>Save Webhook</Button>
+        </div>
       </CardContent>
     </Card>
   );

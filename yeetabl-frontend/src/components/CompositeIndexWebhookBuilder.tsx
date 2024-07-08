@@ -11,18 +11,20 @@ const CompositeIndexWebhookBuilder: React.FC = () => {
   // TODO: Implement state management for metrics and thresholds
   // const [metrics, setMetrics] = useState([]);
   // const [thresholds, setThresholds] = useState({});
-  const [webhookConfig, setWebhookConfig] = useState({});
+  const [webhookConfigs, setWebhookConfigs] = useState<any[]>([]);
+  const [showWebhookConfigurator, setShowWebhookConfigurator] = useState(false);
 
   // TODO: Implement handlers for adding metrics and setting thresholds
   // const handleAddMetric = () => { ... };
   // const handleSetThreshold = (metricId, value) => { ... };
 
   const handleConfigureWebhook = (config: any) => {
-    setWebhookConfig(config);
+    setWebhookConfigs([...webhookConfigs, config]);
+    setShowWebhookConfigurator(false);
   };
 
   const handleSave = () => {
-    console.log('Saving configuration:', { /*metrics, thresholds,*/ webhookConfig });
+    console.log('Saving configuration:', { /*metrics, thresholds,*/ webhookConfigs });
     // TODO: Implement actual save functionality
   };
 
@@ -50,12 +52,23 @@ const CompositeIndexWebhookBuilder: React.FC = () => {
 
         {/* Webhook Configuration Section */}
         <div>
-          <h3>Configure Webhook</h3>
-          <WebhookConfigurator onConfigureWebhook={handleConfigureWebhook} />
+          <h3>Configure Webhooks</h3>
+          {webhookConfigs.map((config, index) => (
+            <div key={index} className="mb-2">
+              Webhook {index + 1}: {config.type} configured
+            </div>
+          ))}
+          {showWebhookConfigurator ? (
+            <WebhookConfigurator onConfigureWebhook={handleConfigureWebhook} />
+          ) : (
+            <Button onClick={() => setShowWebhookConfigurator(true)} className="mt-2">
+              Add New Webhook
+            </Button>
+          )}
         </div>
 
         <Button onClick={handleSave} className="mt-4">
-          Save Composite Index and Webhook
+          Save Composite Index and Webhooks
         </Button>
       </CardContent>
     </Card>
