@@ -12,8 +12,15 @@ interface CompiledMetricsProps {
   onTimeRangeChange: (range: string) => void;
 }
 
-export const CompiledMetrics: React.FC<CompiledMetricsProps> = ({ currentTable, timeRange, onTimeRangeChange }) => {
-  const relevantMetrics = useMemo(() => dummyMetrics.filter(metric => metric.eventName === currentTable), [currentTable]);
+export const CompiledMetrics: React.FC<CompiledMetricsProps> = ({
+  currentTable,
+  timeRange,
+  onTimeRangeChange,
+}) => {
+  const relevantMetrics = useMemo(
+    () => dummyMetrics.filter((metric) => metric.eventName === currentTable),
+    [currentTable],
+  );
 
   const handleAddMetric = () => {
     console.log('Add new metric clicked');
@@ -23,13 +30,14 @@ export const CompiledMetrics: React.FC<CompiledMetricsProps> = ({ currentTable, 
   const generateDummyChartData = (range: string) => {
     const data = [];
     const today = new Date();
-    const dataPoints = {
-      '24h': 24,
-      '7d': 7,
-      '30d': 30,
-      '3m': 12,
-      '1y': 12
-    }[range] || 7;
+    const dataPoints =
+      {
+        '24h': 24,
+        '7d': 7,
+        '30d': 30,
+        '3m': 12,
+        '1y': 12,
+      }[range] || 7;
 
     for (let i = dataPoints - 1; i >= 0; i--) {
       const date = new Date(today);
@@ -42,7 +50,7 @@ export const CompiledMetrics: React.FC<CompiledMetricsProps> = ({ currentTable, 
       }
       data.push({
         date: date,
-        value: Math.floor(Math.random() * 1000) + 500
+        value: Math.floor(Math.random() * 1000) + 500,
       });
     }
     return data;
@@ -77,7 +85,7 @@ export const CompiledMetrics: React.FC<CompiledMetricsProps> = ({ currentTable, 
               {relevantMetrics.map((metric) => (
                 <Card key={metric.id}>
                   <CardHeader>
-                    <CardTitle>{metric.name}</CardTitle>
+                    <CardTitle className="text-xl">{metric.name}</CardTitle>
                     <p className="text-sm text-muted-foreground">
                       {`${metric.aggregation} of ${metric.field || ''} from ${metric.eventName} events`}
                     </p>
@@ -94,10 +102,21 @@ export const CompiledMetrics: React.FC<CompiledMetricsProps> = ({ currentTable, 
                       return (
                         <>
                           <div className="flex gap-2 font-medium leading-none">
-                            Trending {trendDirection} by {Math.abs(trend).toFixed(1)}% this {timeRange} <TrendIcon className="h-4 w-4" />
+                            Trending {trendDirection} by {Math.abs(trend).toFixed(1)}%
+                            {timeRange === '24h' && ' in the last 24 hours'}
+                            {timeRange === '7d' && ' in the last 7 days'}
+                            {timeRange === '30d' && ' in the last month'}
+                            {timeRange === '3m' && ' in the last quarter'}
+                            {timeRange === '1y' && ' in the last year'}
+                            <TrendIcon className="h-4 w-4" />
                           </div>
                           <div className="leading-none text-muted-foreground">
-                            Showing data for the last {timeRange}
+                            Showing data for the
+                            {timeRange === '24h' && ' last 24 hours'}
+                            {timeRange === '7d' && ' last 7 days'}
+                            {timeRange === '30d' && ' last month'}
+                            {timeRange === '3m' && ' last quarter'}
+                            {timeRange === '1y' && ' last year'}
                           </div>
                         </>
                       );
