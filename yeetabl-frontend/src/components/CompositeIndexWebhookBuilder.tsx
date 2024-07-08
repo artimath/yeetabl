@@ -8,9 +8,6 @@ import ThresholdSetter from './ThresholdSetter';
 interface Metric {
   id: string;
   name: string;
-  type: 'event' | 'property';
-  eventName?: string;
-  propertyName?: string;
   aggregation: string;
 }
 
@@ -61,7 +58,7 @@ const CompositeIndexWebhookBuilder: React.FC = () => {
               <ul className="list-disc pl-5">
                 {metrics.map((metric) => (
                   <li key={metric.id}>
-                    {metric.name} ({metric.type === 'event' ? metric.eventName : metric.propertyName}, {metric.aggregation})
+                    {metric.name} ({metric.aggregation})
                   </li>
                 ))}
               </ul>
