@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
-import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
-import { Button } from "./ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
+import { Input } from './ui/input';
+import { Label } from './ui/label';
+import { RadioGroup, RadioGroupItem } from './ui/radio-group';
+import { Button } from './ui/button';
 
 type WebhookType = 'endpoint' | 'slack' | 'email' | 'sms';
 
@@ -20,25 +20,10 @@ interface WebhookConfiguratorProps {
   onCancel: () => void;
 }
 
-const WebhookConfigurator: React.FC<WebhookConfiguratorProps> = ({ onConfigureWebhook, onCancel }) => {
-  const [webhookType, setWebhookType] = useState<WebhookType>('endpoint');
-  const [config, setConfig] = useState<WebhookConfig>({ type: 'endpoint' });
-
-  const handleTypeChange = (value: WebhookType) => {
-    setWebhookType(value);
-    setConfig({ ...config, type: value });
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setConfig({ ...config, [e.target.name]: e.target.value });
-  };
-
-  const handleSave = () => {
-    onConfigureWebhook(config);
-  };
-
-  return (
-    <Card className="max-w-md mx-auto">
+const WebhookConfigurator: React.FC<WebhookConfiguratorProps> = ({
+  onConfigureWebhook,
+  onCancel,
+}) => {
   const [webhookType, setWebhookType] = useState<WebhookType>('endpoint');
   const [config, setConfig] = useState<WebhookConfig>({ type: 'endpoint' });
 
@@ -95,7 +80,7 @@ const WebhookConfigurator: React.FC<WebhookConfiguratorProps> = ({ onConfigureWe
 
         {webhookType === 'slack' && (
           <div className="mb-4">
-            <Button variant="outline" onClick={() => console.log("Connect to Slack")}>
+            <Button variant="outline" onClick={() => console.log('Connect to Slack')}>
               Connect to Slack (OAuth)
             </Button>
           </div>
@@ -130,7 +115,9 @@ const WebhookConfigurator: React.FC<WebhookConfiguratorProps> = ({ onConfigureWe
         )}
 
         <div className="flex justify-end space-x-2">
-          <Button variant="outline" onClick={onCancel}>Cancel</Button>
+          <Button variant="outline" onClick={onCancel}>
+            Cancel
+          </Button>
           <Button onClick={handleSave}>Save Webhook</Button>
         </div>
       </CardContent>

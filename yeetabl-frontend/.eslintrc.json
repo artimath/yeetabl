@@ -4,9 +4,7 @@
     "plugin:eslint-plugin-next-on-pages/recommended",
     "plugin:@typescript-eslint/recommended",
 
-    "next",
-    "prettier",
-    "plugin:prettier/recommended"
+    "next"
   ],
   "plugins": ["eslint-plugin-next-on-pages"],
   "parser": "@typescript-eslint/parser"
