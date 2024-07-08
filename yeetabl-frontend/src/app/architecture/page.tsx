@@ -58,7 +58,8 @@ const ArchitecturePage: React.FC = () => {
           <h3 className="text-xl font-semibold mb-2">Estimated Monthly Costs:</h3>
           <ul className="list-disc pl-6 mb-4">
             <li>
-              <strong>10,000 events per day (300,000 per month)</strong>: $0 (Included in free tier)
+              <strong>10,000 events per day (300,000 per month)</strong>: $0 (Included in
+              free tier)
             </li>
             <li>
               <strong>1 million events per day (30 million per month)</strong>:
@@ -76,11 +77,14 @@ const ArchitecturePage: React.FC = () => {
             </li>
           </ul>
           <p>
-            These estimates are based on current Cloudflare pricing. Batching 2000 events per call significantly reduces costs.
-            Actual monthly costs may vary based on processing complexity and event volume.
+            These estimates are based on current Cloudflare pricing. Batching 2000 events
+            per call significantly reduces costs. Actual monthly costs may vary based on
+            processing complexity and event volume.
           </p>
           <p className="mt-2">
-            <strong>Note:</strong> Analytics Engine is currently free, which further reduces the overall cost of the system.
+            <strong>Note:</strong> Analytics Engine is currently free, which further
+            reduces the overall cost of the system ($1.50 to handle 1 billion events per
+            day.).
           </p>
           <h4 className="text-lg font-semibold mt-4 mb-2">Impact Analysis:</h4>
           <p>Cost Reduction:</p>
