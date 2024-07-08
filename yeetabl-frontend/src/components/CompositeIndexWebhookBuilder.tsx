@@ -55,11 +55,22 @@ const CompositeIndexWebhookBuilder: React.FC = () => {
           <h3>Configure Webhooks</h3>
           {webhookConfigs.map((config, index) => (
             <div key={index} className="mb-2">
-              Webhook {index + 1}: {config.type} configured
+              Webhook {index + 1}: 
+              {config.type === 'endpoint' && `Endpoint: ${config.endpoint}`}
+              {config.type === 'slack' && (
+                <Button variant="outline" size="sm">
+                  Connect to Slack (OAuth)
+                </Button>
+              )}
+              {config.type === 'email' && `Email: ${config.email}`}
+              {config.type === 'sms' && `Phone: ${config.phoneNumber}`}
             </div>
           ))}
           {showWebhookConfigurator ? (
-            <WebhookConfigurator onConfigureWebhook={handleConfigureWebhook} />
+            <WebhookConfigurator 
+              onConfigureWebhook={handleConfigureWebhook} 
+              onCancel={() => setShowWebhookConfigurator(false)}
+            />
           ) : (
             <Button onClick={() => setShowWebhookConfigurator(true)} className="mt-2">
               Add New Webhook
