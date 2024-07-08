@@ -24,8 +24,7 @@ export default function Dashboard() {
   return (
     <DashboardLayout>
       <ApiKeyManager />
-      <h2 className="text-2xl font-bold mt-8 mb-4">Customer Health Score Management</h2>
-      <CompositeIndexWebhookBuilder />
+
       <div className="mt-8 space-y-8">
         <div className="flex space-x-8">
           <div className="w-1/2">
@@ -34,7 +33,11 @@ export default function Dashboard() {
           </div>
           <div className="w-1/2">
             <h2 className="text-2xl font-bold mb-4">Relevant Compiled Metrics</h2>
-            <CompiledMetrics currentTable={currentTable} timeRange={timeRange} onTimeRangeChange={handleTimeRangeChange} />
+            <CompiledMetrics
+              currentTable={currentTable}
+              timeRange={timeRange}
+              onTimeRangeChange={handleTimeRangeChange}
+            />
           </div>
         </div>
         <div className="pt-4">
