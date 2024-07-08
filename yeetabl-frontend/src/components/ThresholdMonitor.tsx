@@ -318,19 +318,8 @@ export const ThresholdMonitor: React.FC = () => {
               <p className="text-gray-300">
                 {thresholdGroups.map((group, groupIndex) => (
                   <span key={group.id}>
-                    {groupIndex > 0 && ` ${group.operator} `}
-                    (
-                      {group.items.map((item, itemIndex) => (
-                        <span key={item.id}>
-                          {itemIndex > 0 && ` ${group.operator} `}
-                          {'metric' in item ? (
-                            `${item.metric} ${item.condition} ${item.value}${item.condition === 'increase' || item.condition === 'decrease' ? '%' : ''} ${item.timeFrame}`
-                          ) : (
-                            renderGroupSummary(item)
-                          )}
-                        </span>
-                      ))}
-                    )
+                    {groupIndex > 0 && ` OR `}
+                    ({renderGroupSummary(group)})
                   </span>
                 ))}
               </p>
