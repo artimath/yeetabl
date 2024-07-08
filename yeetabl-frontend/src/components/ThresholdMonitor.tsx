@@ -119,7 +119,9 @@ export const ThresholdMonitor: React.FC = () => {
     // Add or update the threshold in the savedThresholds array
     setSavedThresholds((prevThresholds) => {
       if (editingThreshold) {
-        return prevThresholds.map((t) => (t.id === editingThreshold.id ? thresholdConfig : t));
+        return prevThresholds.map((t) =>
+          t.id === editingThreshold.id ? thresholdConfig : t,
+        );
       } else {
         return [...prevThresholds, thresholdConfig];
       }
@@ -381,10 +383,39 @@ export const ThresholdMonitor: React.FC = () => {
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>Threshold Monitor</CardTitle>
-      </CardHeader>
       <CardContent>
+        {savedThresholds.length > 0 && (
+          <div className="mt-8">
+            <h3 className="text-xl font-semibold mb-4">Saved Thresholds</h3>
+            {savedThresholds.map((threshold) => (
+              <Card key={threshold.id} className="mb-4">
+                <CardHeader>
+                  <CardTitle>{threshold.name}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p>{renderGroupSummary(threshold.rootGroup)}</p>
+                  <div className="mt-4">
+                    <h4 className="text-lg font-semibold mb-2">Notifications:</h4>
+                    <ul>
+                      {threshold.notifications.map((notification) => (
+                        <li key={notification.id}>
+                          {notification.type}: {notification.destination}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <Button
+                    variant="outline"
+                    onClick={() => handleEditThreshold(threshold)}
+                    className="mt-4"
+                  >
+                    Edit Threshold
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
         <div className="space-y-4">
           {isCreating ? (
             <>
@@ -431,38 +462,6 @@ export const ThresholdMonitor: React.FC = () => {
             <Button onClick={() => setIsCreating(true)}>Create New Threshold</Button>
           )}
         </div>
-        {savedThresholds.length > 0 && (
-          <div className="mt-8">
-            <h3 className="text-xl font-semibold mb-4">Saved Thresholds</h3>
-            {savedThresholds.map((threshold) => (
-              <Card key={threshold.id} className="mb-4">
-                <CardHeader>
-                  <CardTitle>{threshold.name}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p>{renderGroupSummary(threshold.rootGroup)}</p>
-                  <div className="mt-4">
-                    <h4 className="text-lg font-semibold mb-2">Notifications:</h4>
-                    <ul>
-                      {threshold.notifications.map((notification) => (
-                        <li key={notification.id}>
-                          {notification.type}: {notification.destination}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <Button
-                    variant="outline"
-                    onClick={() => handleEditThreshold(threshold)}
-                    className="mt-4"
-                  >
-                    Edit Threshold
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        )}
       </CardContent>
     </Card>
   );
