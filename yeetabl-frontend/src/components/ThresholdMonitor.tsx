@@ -56,6 +56,23 @@ interface ThresholdGroup {
 export const ThresholdMonitor: React.FC = () => {
   const [thresholdGroups, setThresholdGroups] = useState<ThresholdGroup[]>([]);
   const [newCondition, setNewCondition] = useState<ThresholdCondition>({
+
+  const renderGroupSummary = (group: ThresholdGroup): React.ReactNode => {
+    return (
+      <>
+        {group.items.map((item, index) => (
+          <React.Fragment key={item.id}>
+            {index > 0 && ` ${group.operator} `}
+            {'metric' in item ? (
+              `${item.metric} ${item.condition} ${item.value}${item.condition === 'increase' || item.condition === 'decrease' ? '%' : ''} ${item.timeFrame}`
+            ) : (
+              <span>({renderGroupSummary(item)})</span>
+            )}
+          </React.Fragment>
+        ))}
+      </>
+    );
+  };
     id: '',
     metric: '',
     condition: 'greater',
@@ -296,9 +313,9 @@ export const ThresholdMonitor: React.FC = () => {
         <div className="space-y-4">
           {thresholdGroups.map((group) => renderGroup(group))}
           {thresholdGroups.length > 0 && (
-            <div className="bg-blue-50 p-4 rounded-md">
-              <h3 className="text-lg font-semibold mb-2 text-blue-800">Current Query Summary:</h3>
-              <p className="text-blue-600">
+            <div className="bg-gray-800 p-4 rounded-md">
+              <h3 className="text-lg font-semibold mb-2 text-gray-200">Current Query Summary:</h3>
+              <p className="text-gray-300">
                 {thresholdGroups.map((group, groupIndex) => (
                   <span key={group.id}>
                     {groupIndex > 0 && ` ${group.operator} `}
@@ -309,7 +326,7 @@ export const ThresholdMonitor: React.FC = () => {
                           {'metric' in item ? (
                             `${item.metric} ${item.condition} ${item.value}${item.condition === 'increase' || item.condition === 'decrease' ? '%' : ''} ${item.timeFrame}`
                           ) : (
-                            `(Nested Group)`
+                            renderGroupSummary(item)
                           )}
                         </span>
                       ))}
