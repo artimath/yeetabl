@@ -2,14 +2,23 @@ import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 const data = [
-  { events: 1, cost: 0 },
-  { events: 10000, cost: 0 },
+  { events: 0, cost: 0 },
   { events: 100000, cost: 0 },
   { events: 1000000, cost: 11 },
   { events: 10000000, cost: 110 },
   { events: 100000000, cost: 1100 },
+  { events: 500000000, cost: 8250 },
   { events: 1000000000, cost: 16500 },
 ];
+
+const formatNumber = (num: number) => {
+  if (num >= 1000000) {
+    return (num / 1000000).toFixed(0) + 'M';
+  } else if (num >= 1000) {
+    return (num / 1000).toFixed(0) + 'K';
+  }
+  return num.toString();
+};
 
 const CostGraph: React.FC = () => {
   return (
@@ -28,14 +37,17 @@ const CostGraph: React.FC = () => {
           <XAxis
             dataKey="events"
             type="number"
-            scale="log"
-            domain={['auto', 'auto']}
-            tickFormatter={(value) => value.toExponential()}
+            scale="linear"
+            domain={[0, 'dataMax']}
+            tickFormatter={formatNumber}
+            label={{ value: 'Events per day', position: 'insideBottom', offset: -5 }}
           />
-          <YAxis />
+          <YAxis
+            label={{ value: 'Estimated Cost ($)', angle: -90, position: 'insideLeft' }}
+          />
           <Tooltip
             formatter={(value, name, props) => [`$${value}`, 'Estimated Cost']}
-            labelFormatter={(value) => `${value.toExponential()} events per day`}
+            labelFormatter={(value) => `${formatNumber(value)} events per day`}
           />
           <Line type="monotone" dataKey="cost" stroke="#8884d8" activeDot={{ r: 8 }} />
         </LineChart>
