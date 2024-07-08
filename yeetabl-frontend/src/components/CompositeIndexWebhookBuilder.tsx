@@ -53,20 +53,20 @@ const CompositeIndexWebhookBuilder: React.FC = () => {
         {/* Notification Configuration Section */}
         <div>
           <h3>Configure Notifications</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+          <div className="space-y-2">
             {webhookConfigs.map((config, index) => (
               <Card key={index} className="relative">
-                <CardHeader>
-                  <CardTitle className="flex justify-between items-center">
-                    <span className="text-sm text-gray-500">Notification #{index + 1}</span>
+                <CardHeader className="py-2">
+                  <CardTitle className="flex justify-between items-center text-sm">
+                    <span className="text-gray-500">Notification #{index + 1}</span>
                     <span className="capitalize">{config.type}</span>
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  {config.type === 'endpoint' && <p>Endpoint: {config.endpoint}</p>}
-                  {config.type === 'slack' && <p>Slack: Connected</p>}
-                  {config.type === 'email' && <p>Email: {config.email}</p>}
-                  {config.type === 'sms' && <p>Phone: {config.phoneNumber}</p>}
+                <CardContent className="py-2">
+                  {config.type === 'endpoint' && <p className="text-sm">Endpoint: {config.endpoint}</p>}
+                  {config.type === 'slack' && <p className="text-sm">Slack: Connected</p>}
+                  {config.type === 'email' && <p className="text-sm">Email: {config.email}</p>}
+                  {config.type === 'sms' && <p className="text-sm">Phone: {config.phoneNumber}</p>}
                 </CardContent>
               </Card>
             ))}
