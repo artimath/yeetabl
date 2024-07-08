@@ -1,25 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "./ui/card";
 import { Button } from "./ui/button";
+import WebhookConfigurator from './WebhookConfigurator';
 
-// TODO: Import or create these sub-components
+// TODO: Import these sub-components once they're created
 // import MetricSelector from './MetricSelector';
 // import ThresholdSetter from './ThresholdSetter';
-// import WebhookConfigurator from './WebhookConfigurator';
 
 const CompositeIndexWebhookBuilder: React.FC = () => {
-  // TODO: Implement state management (e.g., using useState or useReducer)
+  // TODO: Implement state management for metrics and thresholds
   // const [metrics, setMetrics] = useState([]);
   // const [thresholds, setThresholds] = useState({});
-  // const [webhookConfig, setWebhookConfig] = useState({});
+  const [webhookConfig, setWebhookConfig] = useState({});
 
-  // TODO: Implement handlers for adding metrics, setting thresholds, and configuring webhooks
+  // TODO: Implement handlers for adding metrics and setting thresholds
   // const handleAddMetric = () => { ... };
   // const handleSetThreshold = (metricId, value) => { ... };
-  // const handleConfigureWebhook = (config) => { ... };
 
-  // TODO: Implement save functionality
-  // const handleSave = () => { ... };
+  const handleConfigureWebhook = (config: any) => {
+    setWebhookConfig(config);
+  };
+
+  const handleSave = () => {
+    console.log('Saving configuration:', { /*metrics, thresholds,*/ webhookConfig });
+    // TODO: Implement actual save functionality
+  };
 
   return (
     <Card>
@@ -46,11 +51,10 @@ const CompositeIndexWebhookBuilder: React.FC = () => {
         {/* Webhook Configuration Section */}
         <div>
           <h3>Configure Webhook</h3>
-          {/* TODO: Implement WebhookConfigurator component */}
-          {/* <WebhookConfigurator onConfigureWebhook={handleConfigureWebhook} /> */}
+          <WebhookConfigurator onConfigureWebhook={handleConfigureWebhook} />
         </div>
 
-        <Button onClick={() => console.log('Save functionality not implemented yet')}>
+        <Button onClick={handleSave} className="mt-4">
           Save Composite Index and Webhook
         </Button>
       </CardContent>
