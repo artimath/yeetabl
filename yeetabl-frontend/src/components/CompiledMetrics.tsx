@@ -1,6 +1,7 @@
 import React from 'react';
 import { dummyMetrics } from '../dummyData';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from './ui/card';
+import { TrendingUp } from 'lucide-react';
 import { Button } from './ui/button';
 import { DemoLineChart } from './DemoLineChart';
 
@@ -48,6 +49,14 @@ export const CompiledMetrics: React.FC<{ currentTable: string }> = ({ currentTab
                   <CardContent>
                     <DemoLineChart data={generateDummyChartData()} />
                   </CardContent>
+                  <CardFooter className="flex-col items-start gap-2 text-sm">
+                    <div className="flex gap-2 font-medium leading-none">
+                      Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+                    </div>
+                    <div className="leading-none text-muted-foreground">
+                      Showing total visitors for the last 6 months
+                    </div>
+                  </CardFooter>
                 </Card>
               ))}
             </div>
