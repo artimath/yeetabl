@@ -44,18 +44,18 @@ const CompositeIndexWebhookBuilder: React.FC = () => {
   return (
     <Card className="max-w-2xl mx-auto">
       <CardHeader>
-        <CardTitle>Composite Index Webhook Builder</CardTitle>
+        <CardTitle as="h1">Composite Index Webhook Builder</CardTitle>
         <CardDescription>Create a composite index and configure webhooks for threshold alerts</CardDescription>
       </CardHeader>
       <CardContent>
         {/* Metric Selection Section */}
-        <div className="mb-6">
-          <h3 className="text-lg font-semibold mb-2">Select Metrics</h3>
+        <section className="mb-6" aria-labelledby="select-metrics">
+          <h2 id="select-metrics" className="text-lg font-semibold mb-2">Select Metrics</h2>
           <MetricSelector onAddMetric={handleAddMetric} />
           {metrics.length > 0 && (
             <div className="mt-4">
-              <h4 className="text-md font-semibold mb-2">Selected Metrics:</h4>
-              <ul className="list-disc pl-5">
+              <h3 className="text-md font-semibold mb-2">Selected Metrics:</h3>
+              <ul className="list-disc pl-5" aria-label="List of selected metrics">
                 {metrics.map((metric) => (
                   <li key={metric.id}>
                     {metric.name} ({metric.aggregation})
@@ -64,16 +64,16 @@ const CompositeIndexWebhookBuilder: React.FC = () => {
               </ul>
             </div>
           )}
-        </div>
+        </section>
 
         {/* Threshold Setting Section */}
-        <div className="mb-6">
-          <h3 className="text-lg font-semibold mb-2">Set Thresholds</h3>
+        <section className="mb-6" aria-labelledby="set-thresholds">
+          <h2 id="set-thresholds" className="text-lg font-semibold mb-2">Set Thresholds</h2>
           <ThresholdSetter metrics={metrics} onSetThreshold={handleSetThreshold} />
           {thresholds.length > 0 && (
             <div className="mt-4">
-              <h4 className="text-md font-semibold mb-2">Set Thresholds:</h4>
-              <ul className="list-disc pl-5">
+              <h3 className="text-md font-semibold mb-2">Set Thresholds:</h3>
+              <ul className="list-disc pl-5" aria-label="List of set thresholds">
                 {thresholds.map((threshold, index) => (
                   <li key={index}>
                     {metrics.find(m => m.id === threshold.metricId)?.name} {threshold.operator} {threshold.value}
@@ -82,12 +82,12 @@ const CompositeIndexWebhookBuilder: React.FC = () => {
               </ul>
             </div>
           )}
-        </div>
+        </section>
 
         {/* Notification Configuration Section */}
-        <div>
-          <h3>Configure Notifications</h3>
-          <div className="space-y-2">
+        <section aria-labelledby="configure-notifications">
+          <h2 id="configure-notifications" className="text-lg font-semibold mb-2">Configure Notifications</h2>
+          <div className="space-y-2" aria-label="List of configured notifications">
             {webhookConfigs.map((config, index) => (
               <Card key={index} className="relative">
                 <CardHeader className="py-2">
