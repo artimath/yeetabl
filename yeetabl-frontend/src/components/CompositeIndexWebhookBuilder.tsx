@@ -115,7 +115,7 @@ const CompositeIndexWebhookBuilder: React.FC = () => {
               Add New Notification
             </Button>
           )}
-        </div>
+        </section>
 
         <Button onClick={handleSave} className="mt-4">
           Save Composite Index and Webhooks
