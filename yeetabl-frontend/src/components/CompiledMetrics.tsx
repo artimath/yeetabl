@@ -100,9 +100,10 @@ export const CompiledMetrics: React.FC<CompiledMetricsProps> = ({
                       const trend = calculateTrend(chartData);
                       const trendDirection = trend >= 0 ? 'up' : 'down';
                       const TrendIcon = trend >= 0 ? TrendingUp : TrendingDown;
+                      const trendColor = trend >= 0 ? 'text-green-500' : 'text-red-500';
                       return (
                         <>
-                          <div className="flex gap-2 font-medium leading-none">
+                          <div className={`flex gap-2 font-medium leading-none ${trendColor}`}>
                             Trending {trendDirection} by {Math.abs(trend).toFixed(1)}%
                             {timeRange === '24h' && ' in the last 24 hours'}
                             {timeRange === '7d' && ' in the last 7 days'}
