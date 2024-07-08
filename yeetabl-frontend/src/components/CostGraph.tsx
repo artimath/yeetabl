@@ -47,13 +47,13 @@ const CostGraph: React.FC = () => {
           />
           <Tooltip
             formatter={(value, name, props) => {
-              const formattedValue = name === "Batched (4000 events)" ? `$${Number(value).toFixed(4)}` : `$${value}`;
+              const formattedValue = `$${Number(value).toFixed(4)}`;
               return [`${formattedValue} per day`, name];
             }}
             labelFormatter={(value) => `${formatNumber(value)} events per day`}
           />
-          <Line type="monotone" dataKey="cost" stroke="#8884d8" activeDot={{ r: 8 }} name="Unbatched" />
-          <Line type="monotone" dataKey="batchedCost" stroke="#82ca9d" activeDot={{ r: 8 }} name="Batched (4000 events)" />
+          <Line type="monotone" dataKey="cost" stroke="#8884d8" activeDot={{ r: 8 }} name="Unbatched (cost per day)" />
+          <Line type="monotone" dataKey="batchedCost" stroke="#82ca9d" activeDot={{ r: 8 }} name="Batched 4000 events (cost per day)" />
         </LineChart>
       </ResponsiveContainer>
     </div>
