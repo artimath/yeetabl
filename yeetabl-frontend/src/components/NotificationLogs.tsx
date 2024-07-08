@@ -9,6 +9,12 @@ import {
   TableHeader,
   TableRow,
 } from './ui/table';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from './ui/tooltip';
 
 interface NotificationLog {
   id: string;
@@ -16,6 +22,11 @@ interface NotificationLog {
   customer: string;
   notificationMethod: string;
   dateTime: string;
+  metricTripped: string;
+  thresholdCrossed: string;
+  teamSize: number;
+  usage: number;
+  cost: number;
 }
 
 const mockLogs: NotificationLog[] = [
@@ -25,6 +36,11 @@ const mockLogs: NotificationLog[] = [
     customer: 'Acme Corp',
     notificationMethod: 'Email',
     dateTime: '2023-06-01 14:30:00',
+    metricTripped: 'Daily Active Users',
+    thresholdCrossed: '> 1000',
+    teamSize: 50,
+    usage: 1200,
+    cost: 5000,
   },
   {
     id: '2',
@@ -32,6 +48,11 @@ const mockLogs: NotificationLog[] = [
     customer: 'TechStar',
     notificationMethod: 'Slack',
     dateTime: '2023-06-02 09:15:00',
+    metricTripped: 'Team Members',
+    thresholdCrossed: '< 10',
+    teamSize: 8,
+    usage: 500,
+    cost: 2000,
   },
   {
     id: '3',
@@ -39,6 +60,11 @@ const mockLogs: NotificationLog[] = [
     customer: 'DataDrive',
     notificationMethod: 'Webhook',
     dateTime: '2023-06-03 11:45:00',
+    metricTripped: 'Monthly Cost',
+    thresholdCrossed: '> $10,000',
+    teamSize: 30,
+    usage: 3000,
+    cost: 12000,
   },
   {
     id: '4',
@@ -144,12 +170,25 @@ export const NotificationLogs: React.FC = () => {
           </TableHeader>
           <TableBody>
             {mockLogs.map((log) => (
-              <TableRow key={log.id}>
-                <TableCell>{log.threshold}</TableCell>
-                <TableCell>{log.customer}</TableCell>
-                <TableCell>{log.notificationMethod}</TableCell>
-                <TableCell>{log.dateTime}</TableCell>
-              </TableRow>
+              <TooltipProvider key={log.id}>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <TableRow>
+                      <TableCell>{log.threshold}</TableCell>
+                      <TableCell>{log.customer}</TableCell>
+                      <TableCell>{log.notificationMethod}</TableCell>
+                      <TableCell>{log.dateTime}</TableCell>
+                    </TableRow>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Metric Tripped: {log.metricTripped}</p>
+                    <p>Threshold Crossed: {log.thresholdCrossed}</p>
+                    <p>Team Size: {log.teamSize}</p>
+                    <p>Usage: {log.usage}</p>
+                    <p>Cost: ${log.cost}</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             ))}
           </TableBody>
         </Table>
