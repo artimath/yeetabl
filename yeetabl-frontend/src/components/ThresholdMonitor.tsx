@@ -10,6 +10,7 @@ import {
   SelectValue,
 } from './ui/select';
 import { PlusCircle, MinusCircle, Link } from 'lucide-react';
+import { toast } from './ui/use-toast';
 
 interface Webhook {
   id: string;
@@ -32,7 +33,7 @@ interface ThresholdGroup {
 
 /**
  * Threshold Configuration Schema
- * 
+ *
  * {
  *   id: string,
  *   name: string,
@@ -42,13 +43,13 @@ interface ThresholdGroup {
  *   createdAt: string (ISO 8601 date),
  *   updatedAt: string (ISO 8601 date)
  * }
- * 
+ *
  * ThresholdGroup: {
  *   id: string,
  *   operator: 'AND' | 'OR',
  *   items: (ThresholdCondition | ThresholdGroup)[]
  * }
- * 
+ *
  * ThresholdCondition: {
  *   id: string,
  *   metric: string,
@@ -72,6 +73,51 @@ export const ThresholdMonitor: React.FC = () => {
   const [savedThresholds, setSavedThresholds] = useState<any[]>([]);
   const [webhooks, setWebhooks] = useState<Webhook[]>([]);
   const [newWebhookUrl, setNewWebhookUrl] = useState<string>('');
+
+  const saveThreshold = () => {
+    if (thresholdGroups.length === 0) {
+      toast({
+        title: 'Error',
+        description: 'Please add at least one threshold condition before saving.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    if (!thresholdName) {
+      toast({
+        title: 'Error',
+        description: 'Please provide a name for the threshold.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    const thresholdConfig = {
+      id: Date.now().toString(),
+      name: thresholdName,
+      description: 'User-defined threshold',
+      rootGroup: thresholdGroups[0],
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    // Here you would typically send this to your backend API
+    console.log('Saving threshold:', thresholdConfig);
+
+    // Add the new threshold to the savedThresholds array
+    setSavedThresholds((prevThresholds) => [...prevThresholds, thresholdConfig]);
+
+    toast({
+      title: 'Success',
+      description: 'Threshold saved successfully!',
+    });
+
+    // Reset the form
+    setThresholdGroups([]);
+    setThresholdName('');
+    setIsCreating(false);
+  };
 
   const renderGroupSummary = (group: ThresholdGroup): React.ReactNode => {
     return (
@@ -321,22 +367,59 @@ export const ThresholdMonitor: React.FC = () => {
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          {thresholdGroups.map((group) => renderGroup(group))}
-          {thresholdGroups.length > 0 && (
-            <div className="bg-gray-800 p-4 rounded-md">
-              <h3 className="text-lg font-semibold mb-2 text-gray-200">Current Query Summary:</h3>
-              <p className="text-gray-300">
-                {thresholdGroups.map((group, groupIndex) => (
-                  <span key={group.id}>
-                    {groupIndex > 0 && ` OR `}
-                    ({renderGroupSummary(group)})
-                  </span>
-                ))}
-              </p>
-            </div>
+          {isCreating ? (
+            <>
+              <div className="flex items-center space-x-2">
+                <Input
+                  type="text"
+                  placeholder="Threshold Name"
+                  value={thresholdName}
+                  onChange={(e) => setThresholdName(e.target.value)}
+                  className="flex-grow"
+                />
+                <Button
+                  onClick={saveThreshold}
+                  disabled={thresholdGroups.length === 0 || !thresholdName}
+                >
+                  Save Threshold
+                </Button>
+              </div>
+              {thresholdGroups.map((group) => renderGroup(group))}
+              {thresholdGroups.length > 0 && (
+                <div className="bg-gray-800 p-4 rounded-md">
+                  <h3 className="text-lg font-semibold mb-2 text-gray-200">
+                    Current Query Summary:
+                  </h3>
+                  <p className="text-gray-300">
+                    {thresholdGroups.map((group, groupIndex) => (
+                      <span key={group.id}>
+                        {groupIndex > 0 && ` OR `}({renderGroupSummary(group)})
+                      </span>
+                    ))}
+                  </p>
+                </div>
+              )}
+              <Button onClick={() => handleAddGroup()}>Add Threshold Group</Button>
+            </>
+          ) : (
+            <Button onClick={() => setIsCreating(true)}>Create New Threshold</Button>
           )}
-          <Button onClick={() => handleAddGroup()}>Add Threshold Group</Button>
         </div>
+        {savedThresholds.length > 0 && (
+          <div className="mt-8">
+            <h3 className="text-xl font-semibold mb-4">Saved Thresholds</h3>
+            {savedThresholds.map((threshold) => (
+              <Card key={threshold.id} className="mb-4">
+                <CardHeader>
+                  <CardTitle>{threshold.name}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p>{renderGroupSummary(threshold.rootGroup)}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
       </CardContent>
     </Card>
   );
