@@ -9,15 +9,7 @@ import {
   SelectValue,
 } from './ui/select';
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-} from './ui/command';
-import { Check, ChevronsUpDown } from 'lucide-react';
-import { cn } from '../lib/utils';
+import { Check } from 'lucide-react';
 import { dummyMetrics } from '../dummyData';
 
 interface Metric {
@@ -70,49 +62,26 @@ const MetricSelector: React.FC<MetricSelectorProps> = ({ onAddMetric }) => {
           </SelectContent>
         </Select>
         <Label htmlFor="metric">of</Label>
-        <Popover open={open} onOpenChange={setOpen}>
-          <PopoverTrigger asChild>
-            <Button
-              variant="outline"
-              role="combobox"
-              aria-expanded={open}
-              className="w-[200px] justify-between"
-              id="metric"
-            >
-              {metricName ? (
-                dummyMetrics.find((metric) => metric.name === metricName)?.name
-              ) : (
-                <span className="text-muted-foreground">Select metric...</span>
-              )}
-              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-[200px] p-0">
-            <Command>
-              <CommandInput placeholder="Search metric..." />
-              <CommandEmpty>No metric found.</CommandEmpty>
-              <CommandGroup>
-                {dummyMetrics.map((metric) => (
-                  <CommandItem
-                    key={metric.id}
-                    onSelect={() => {
-                      setMetricName(metric.name);
-                      setOpen(false);
-                    }}
-                  >
-                    <Check
-                      className={cn(
-                        'mr-2 h-4 w-4',
-                        metricName === metric.name ? 'opacity-100' : 'opacity-0',
-                      )}
-                    />
-                    {metric.name}
-                  </CommandItem>
-                ))}
-              </CommandGroup>
-            </Command>
-          </PopoverContent>
-        </Popover>
+        <Select value={metricName} onValueChange={setMetricName}>
+          <SelectTrigger className="w-[200px]" id="metric">
+            <SelectValue placeholder="Select metric" />
+          </SelectTrigger>
+          <SelectContent>
+            {dummyMetrics.map((metric) => (
+              <SelectItem key={metric.id} value={metric.name}>
+                <div className="flex items-center">
+                  <Check
+                    className={cn(
+                      'mr-2 h-4 w-4',
+                      metricName === metric.name ? 'opacity-100' : 'opacity-0'
+                    )}
+                  />
+                  {metric.name}
+                </div>
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
         <Label htmlFor="timePeriod">in a</Label>
         <Select value={timePeriod} onValueChange={setTimePeriod}>
           <SelectTrigger className="w-[100px]" id="timePeriod">
