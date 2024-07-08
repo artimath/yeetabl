@@ -309,7 +309,7 @@ export const ThresholdMonitor: React.FC = () => {
                           {'metric' in item ? (
                             `${item.metric} ${item.condition} ${item.value}${item.condition === 'increase' || item.condition === 'decrease' ? '%' : ''} ${item.timeFrame}`
                           ) : (
-                            `(${renderGroupSummary(item)})`
+                            `(Nested Group)`
                           )}
                         </span>
                       ))}
