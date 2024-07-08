@@ -7,6 +7,11 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "../lib/utils";
 import { dummyMetrics } from '../dummyData';
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "./ui/command";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { cn } from "../lib/utils";
+import { dummyMetrics } from '../dummyData';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "./ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Check, ChevronsUpDown } from "lucide-react"
