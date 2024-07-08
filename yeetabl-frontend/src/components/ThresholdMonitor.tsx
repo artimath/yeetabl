@@ -75,33 +75,52 @@ export const ThresholdMonitor: React.FC = () => {
   const [isCreating, setIsCreating] = useState<boolean>(false);
   const [savedThresholds, setSavedThresholds] = useState<any[]>([
     {
-      id: 'dummy-threshold',
-      name: 'Example Threshold',
-      description: 'A predefined example threshold',
+      id: 'complex-threshold',
+      name: 'Complex Team and Cost Threshold',
+      description: 'Users in team and volume OR team under 20 and over 7500 dollars',
       rootGroup: {
         id: 'root',
-        operator: 'AND',
+        operator: 'OR',
         items: [
           {
-            id: 'condition1',
-            metric: 'users_in_team',
-            condition: 'greater',
-            value: 30,
-            timeFrame: 'anytime',
+            id: 'group1',
+            operator: 'AND',
+            items: [
+              {
+                id: 'condition1',
+                metric: 'users_in_team',
+                condition: 'greater',
+                value: 30,
+                timeFrame: 'anytime',
+              },
+              {
+                id: 'condition2',
+                metric: 'usage_volume',
+                condition: 'greater',
+                value: 50000,
+                timeFrame: 'anytime',
+              },
+            ],
           },
           {
-            id: 'condition2',
-            metric: 'usage_volume',
-            condition: 'greater',
-            value: 50000,
-            timeFrame: 'anytime',
-          },
-          {
-            id: 'condition3',
-            metric: 'monthly_cost',
-            condition: 'greater',
-            value: 7500,
-            timeFrame: 'anytime',
+            id: 'group2',
+            operator: 'AND',
+            items: [
+              {
+                id: 'condition3',
+                metric: 'users_in_team',
+                condition: 'less',
+                value: 20,
+                timeFrame: 'anytime',
+              },
+              {
+                id: 'condition4',
+                metric: 'monthly_cost',
+                condition: 'greater',
+                value: 7500,
+                timeFrame: 'anytime',
+              },
+            ],
           },
         ],
       },
@@ -207,8 +226,8 @@ export const ThresholdMonitor: React.FC = () => {
                 ) : (
                   <>
                     <strong>
-                      {item.value}
                       {item.metric === 'monthly_cost' ? '$' : ''}
+                      {item.value}
                       {item.condition === 'increase' || item.condition === 'decrease'
                         ? '%'
                         : ''}
