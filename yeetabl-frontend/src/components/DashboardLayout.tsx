@@ -33,18 +33,10 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
               </li>
               <li>
                 <Link
-                  href="/dashboard/analytics"
+                  href="/architecture"
                   className={`text-sm font-medium ${pathname === '/dashboard/analytics' ? 'text-primary' : 'text-muted-foreground hover:text-primary'}`}
                 >
-                  Analytics
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/dashboard/api-keys"
-                  className={`text-sm font-medium ${pathname === '/dashboard/api-keys' ? 'text-primary' : 'text-muted-foreground hover:text-primary'}`}
-                >
-                  API Keys
+                  Architecture & Design Decisions
                 </Link>
               </li>
             </ul>
