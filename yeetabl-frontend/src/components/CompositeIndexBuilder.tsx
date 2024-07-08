@@ -9,20 +9,25 @@ import {
   SelectValue,
 } from './ui/select';
 
+type Operation = 'sum' | 'average' | 'count' | 'min' | 'max';
+
 type IndexField = {
   name: string;
-  type: 'record' | 'metric' | 'aggregate';
+  table: string;
+  operation: Operation;
 };
 
 export function CompositeIndexBuilder() {
   const [fields, setFields] = useState<IndexField[]>([]);
   const [newFieldName, setNewFieldName] = useState('');
-  const [newFieldType, setNewFieldType] = useState<IndexField['type']>('record');
+  const [newFieldTable, setNewFieldTable] = useState('');
+  const [newFieldOperation, setNewFieldOperation] = useState<Operation>('sum');
 
   const addField = () => {
-    if (newFieldName) {
-      setFields([...fields, { name: newFieldName, type: newFieldType }]);
+    if (newFieldName && newFieldTable) {
+      setFields([...fields, { name: newFieldName, table: newFieldTable, operation: newFieldOperation }]);
       setNewFieldName('');
+      setNewFieldTable('');
     }
   };
 
@@ -32,8 +37,8 @@ export function CompositeIndexBuilder() {
 
   const createIndex = async () => {
     try {
+      console.log('Creating composite index with fields:', fields);
       // Here you would implement the logic to create the index
-      console.log('Creating index with fields:', fields);
       // You might want to send this data to your backend API
       // await api.createCompositeIndex(fields);
       // Show success message
@@ -51,17 +56,24 @@ export function CompositeIndexBuilder() {
           value={newFieldName}
           onChange={(e) => setNewFieldName(e.target.value)}
         />
+        <Input
+          placeholder="Table name"
+          value={newFieldTable}
+          onChange={(e) => setNewFieldTable(e.target.value)}
+        />
         <Select
-          value={newFieldType}
-          onValueChange={(value) => setNewFieldType(value as IndexField['type'])}
+          value={newFieldOperation}
+          onValueChange={(value) => setNewFieldOperation(value as Operation)}
         >
           <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Select a field type" />
+            <SelectValue placeholder="Select an operation" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="record">Record</SelectItem>
-            <SelectItem value="metric">Metric</SelectItem>
-            <SelectItem value="aggregate">Aggregate</SelectItem>
+            <SelectItem value="sum">Sum</SelectItem>
+            <SelectItem value="average">Average</SelectItem>
+            <SelectItem value="count">Count</SelectItem>
+            <SelectItem value="min">Min</SelectItem>
+            <SelectItem value="max">Max</SelectItem>
           </SelectContent>
         </Select>
         <Button onClick={addField}>Add Field</Button>
@@ -70,7 +82,7 @@ export function CompositeIndexBuilder() {
         {fields.map((field, index) => (
           <li key={index} className="flex justify-between items-center">
             <span>
-              {field.name} ({field.type})
+              {field.operation}({field.name}) from {field.table}
             </span>
             <Button variant="destructive" onClick={() => removeField(index)}>
               Remove
