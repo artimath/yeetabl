@@ -111,7 +111,7 @@ const MetricSelector: React.FC<MetricSelectorProps> = ({ onAddMetric }) => {
             <SelectItem value="90d">90 DAY</SelectItem>
           </SelectContent>
         </Select>
-        <Label htmlFor="timePeriod">PERIOD</Label>
+        <Label>PERIOD</Label>
       </fieldset>
       <Button onClick={handleAddMetric} aria-label="Add selected metric">Add Metric</Button>
     </form>
