@@ -2,10 +2,12 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import CostGraph from '@/components/CostGraph';
+import { DashboardLayout } from '@/components/DashboardLayout';
 
 const ArchitecturePage: React.FC = () => {
   return (
-    <div className="container mx-auto px-4 py-8">
+    <DashboardLayout>
+      <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-6">
         <em>streams should be yeetabl!</em>
       </h1>
@@ -97,7 +99,8 @@ const ArchitecturePage: React.FC = () => {
           </div>
         </CardContent>
       </Card>
-    </div>
+      </div>
+    </DashboardLayout>
   );
 };
 
