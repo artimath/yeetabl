@@ -9,7 +9,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from './ui/select';
-import { PlusCircle, MinusCircle } from 'lucide-react';
+import { PlusCircle, MinusCircle, Link } from 'lucide-react';
+
+interface Webhook {
+  id: string;
+  url: string;
+}
 
 interface ThresholdCondition {
   id: string;
