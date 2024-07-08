@@ -105,7 +105,11 @@ export const ThresholdMonitor: React.FC = () => {
           }
         ]
       },
-      notifications: [],
+      notifications: [
+        { id: 'webhook1', type: 'webhook', destination: 'https://example.com/endpoint' },
+        { id: 'email1', type: 'email', destination: 'example@email.com' },
+        { id: 'slack1', type: 'slack', destination: 'Customer Success Channel' }
+      ],
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     }
