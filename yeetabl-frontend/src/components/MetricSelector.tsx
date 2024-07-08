@@ -1,21 +1,23 @@
 import React, { useState } from 'react';
-import { Button } from "./ui/button";
-import { Label } from "./ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "./ui/command";
-import { Check, ChevronsUpDown } from "lucide-react";
-import { cn } from "../lib/utils";
-import { dummyMetrics } from '../dummyData';
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "./ui/command";
-import { Check, ChevronsUpDown } from "lucide-react";
-import { cn } from "../lib/utils";
-import { dummyMetrics } from '../dummyData';
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "./ui/command";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { Check, ChevronsUpDown } from "lucide-react"
-import { cn } from "../lib/utils"
+import { Button } from './ui/button';
+import { Label } from './ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from './ui/select';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from './ui/command';
+import { Check, ChevronsUpDown } from 'lucide-react';
+import { cn } from '../lib/utils';
 import { dummyMetrics } from '../dummyData';
 
 interface Metric {
@@ -30,14 +32,6 @@ interface MetricSelectorProps {
 }
 
 const MetricSelector: React.FC<MetricSelectorProps> = ({ onAddMetric }) => {
-  // Ensure dummyMetrics is available in this scope
-  const dummyMetrics = [
-    { id: '1', name: 'Monthly Active Users' },
-    { id: '2', name: 'Average Session Duration' },
-    { id: '3', name: 'Total Revenue' },
-    { id: '4', name: 'New User Signups' },
-    { id: '5', name: 'Feature Usage' },
-  ];
   const [open, setOpen] = useState(false);
   const [metricName, setMetricName] = useState('');
   const [aggregation, setAggregation] = useState('count');
@@ -85,9 +79,11 @@ const MetricSelector: React.FC<MetricSelectorProps> = ({ onAddMetric }) => {
               className="w-[200px] justify-between"
               id="metric"
             >
-              {metricName
-                ? dummyMetrics.find((metric) => metric.name === metricName)?.name
-                : <span className="text-muted-foreground">Select metric...</span>}
+              {metricName ? (
+                dummyMetrics.find((metric) => metric.name === metricName)?.name
+              ) : (
+                <span className="text-muted-foreground">Select metric...</span>
+              )}
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
@@ -106,8 +102,8 @@ const MetricSelector: React.FC<MetricSelectorProps> = ({ onAddMetric }) => {
                   >
                     <Check
                       className={cn(
-                        "mr-2 h-4 w-4",
-                        metricName === metric.name ? "opacity-100" : "opacity-0"
+                        'mr-2 h-4 w-4',
+                        metricName === metric.name ? 'opacity-100' : 'opacity-0',
                       )}
                     />
                     {metric.name}
@@ -131,7 +127,9 @@ const MetricSelector: React.FC<MetricSelectorProps> = ({ onAddMetric }) => {
         </Select>
         <Label>PERIOD</Label>
       </fieldset>
-      <Button onClick={handleAddMetric} aria-label="Add selected metric">Add Metric</Button>
+      <Button onClick={handleAddMetric} aria-label="Add selected metric">
+        Add Metric
+      </Button>
     </form>
   );
 };
