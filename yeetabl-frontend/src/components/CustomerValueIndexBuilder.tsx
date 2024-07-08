@@ -3,6 +3,13 @@ import { Input } from './ui/input';
 import { Select } from './ui/select';
 import { Button } from './ui/button';
 import { Slider } from './ui/slider';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 
 // Define types for our component
 type Metric = {
@@ -70,114 +77,122 @@ const CustomerValueIndexBuilder: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div>
-        <label htmlFor="indexName">Index Name</label>
-        <Input
-          id="indexName"
-          value={indexDefinition.name}
-          onChange={(e) => handleInputChange('name', e.target.value)}
-          placeholder="e.g., High-Value Customer Churn Risk"
-        />
-      </div>
-
-      <div>
-        <h3>Customer Segment</h3>
-        <Input
-          value={indexDefinition.segment.name}
-          onChange={(e) =>
-            handleInputChange('segment', {
-              ...indexDefinition.segment,
-              name: e.target.value,
-            })
-          }
-          placeholder="Segment Name (e.g., High-Value Customers)"
-        />
-        <Input
-          value={indexDefinition.segment.condition}
-          onChange={(e) =>
-            handleInputChange('segment', {
-              ...indexDefinition.segment,
-              condition: e.target.value,
-            })
-          }
-          placeholder="Condition (e.g., MRR > 1000)"
-        />
-      </div>
-
-      <div>
-        <h3>Metrics</h3>
-        {indexDefinition.metrics.map((metric, index) => (
-          <div key={index} className="space-y-2">
+    <Card>
+      <CardHeader>
+        <CardTitle>Customer Value Index Builder</CardTitle>
+        <CardDescription>Define your customer value index criteria</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="space-y-2">
+            <label htmlFor="indexName" className="text-sm font-medium">Index Name</label>
             <Input
-              value={metric.name}
-              onChange={(e) => updateMetric(index, 'name', e.target.value)}
-              placeholder="Metric Name"
-            />
-            <Select
-              value={metric.changeType}
-              onChange={(e) => updateMetric(index, 'changeType', e.target.value)}
-            >
-              <option value="increase">Increase</option>
-              <option value="decrease">Decrease</option>
-            </Select>
-            <Input
-              type="number"
-              value={metric.changeAmount}
-              onChange={(e) =>
-                updateMetric(index, 'changeAmount', parseFloat(e.target.value))
-              }
-              placeholder="Change Amount (%)"
-            />
-            <Input
-              type="number"
-              value={metric.timePeriod}
-              onChange={(e) =>
-                updateMetric(index, 'timePeriod', parseInt(e.target.value))
-              }
-              placeholder="Time Period (days)"
+              id="indexName"
+              value={indexDefinition.name}
+              onChange={(e) => handleInputChange('name', e.target.value)}
+              placeholder="e.g., High-Value Customer Churn Risk"
             />
           </div>
-        ))}
-        <Button onClick={addMetric} type="button">
-          Add Metric
-        </Button>
-      </div>
 
-      <div>
-        <h3>Aggregation Method</h3>
-        <Select
-          value={indexDefinition.aggregationMethod}
-          onChange={(e) => handleInputChange('aggregationMethod', e.target.value)}
-        >
-          <option value="weighted_average">Weighted Average</option>
-          <option value="sum">Sum of Scores</option>
-        </Select>
-      </div>
+          <div className="space-y-2">
+            <h3 className="text-sm font-medium">Customer Segment</h3>
+            <Input
+              value={indexDefinition.segment.name}
+              onChange={(e) =>
+                handleInputChange('segment', {
+                  ...indexDefinition.segment,
+                  name: e.target.value,
+                })
+              }
+              placeholder="Segment Name (e.g., High-Value Customers)"
+            />
+            <Input
+              value={indexDefinition.segment.condition}
+              onChange={(e) =>
+                handleInputChange('segment', {
+                  ...indexDefinition.segment,
+                  condition: e.target.value,
+                })
+              }
+              placeholder="Condition (e.g., MRR > 1000)"
+            />
+          </div>
 
-      <div>
-        <h3>Threshold</h3>
-        <Slider
-          value={[indexDefinition.threshold]}
-          onValueChange={(value) => handleInputChange('threshold', value[0])}
-          max={100}
-          step={1}
-        />
-      </div>
+          <div className="space-y-2">
+            <h3 className="text-sm font-medium">Metrics</h3>
+            {indexDefinition.metrics.map((metric, index) => (
+              <Card key={index} className="p-4 space-y-2">
+                <Input
+                  value={metric.name}
+                  onChange={(e) => updateMetric(index, 'name', e.target.value)}
+                  placeholder="Metric Name"
+                />
+                <Select
+                  value={metric.changeType}
+                  onValueChange={(value) => updateMetric(index, 'changeType', value)}
+                >
+                  <option value="increase">Increase</option>
+                  <option value="decrease">Decrease</option>
+                </Select>
+                <Input
+                  type="number"
+                  value={metric.changeAmount}
+                  onChange={(e) =>
+                    updateMetric(index, 'changeAmount', parseFloat(e.target.value))
+                  }
+                  placeholder="Change Amount (%)"
+                />
+                <Input
+                  type="number"
+                  value={metric.timePeriod}
+                  onChange={(e) =>
+                    updateMetric(index, 'timePeriod', parseInt(e.target.value))
+                  }
+                  placeholder="Time Period (days)"
+                />
+              </Card>
+            ))}
+            <Button onClick={addMetric} type="button" variant="outline">
+              Add Metric
+            </Button>
+          </div>
 
-      <div>
-        <h3>Notification Method</h3>
-        <Select
-          value={indexDefinition.notificationMethod}
-          onChange={(e) => handleInputChange('notificationMethod', e.target.value)}
-        >
-          <option value="email">Email</option>
-          <option value="webhook">Webhook</option>
-        </Select>
-      </div>
+          <div className="space-y-2">
+            <h3 className="text-sm font-medium">Aggregation Method</h3>
+            <Select
+              value={indexDefinition.aggregationMethod}
+              onValueChange={(value) => handleInputChange('aggregationMethod', value)}
+            >
+              <option value="weighted_average">Weighted Average</option>
+              <option value="sum">Sum of Scores</option>
+            </Select>
+          </div>
 
-      <Button type="submit">Create Index</Button>
-    </form>
+          <div className="space-y-2">
+            <h3 className="text-sm font-medium">Threshold</h3>
+            <Slider
+              value={[indexDefinition.threshold]}
+              onValueChange={(value) => handleInputChange('threshold', value[0])}
+              max={100}
+              step={1}
+            />
+          </div>
+
+          <div className="space-y-2">
+            <h3 className="text-sm font-medium">Notification Method</h3>
+            <Select
+              value={indexDefinition.notificationMethod}
+              onValueChange={(value) => handleInputChange('notificationMethod', value)}
+            >
+              <option value="email">Email</option>
+              <option value="webhook">Webhook</option>
+            </Select>
+          </div>
+
+          <Button type="submit">Create Index</Button>
+        </form>
+      </CardContent>
+    </Card>
   );
 };
 
