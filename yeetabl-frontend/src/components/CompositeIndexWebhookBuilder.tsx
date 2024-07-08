@@ -50,18 +50,27 @@ const CompositeIndexWebhookBuilder: React.FC = () => {
           {/* <ThresholdSetter metrics={metrics} onSetThreshold={handleSetThreshold} /> */}
         </div>
 
-        {/* Webhook Configuration Section */}
+        {/* Notification Configuration Section */}
         <div>
-          <h3>Configure Webhooks</h3>
-          {webhookConfigs.map((config, index) => (
-            <div key={index} className="mb-2">
-              Webhook {index + 1}: 
-              {config.type === 'endpoint' && `Endpoint: ${config.endpoint}`}
-              {config.type === 'slack' && 'Slack: Connected'}
-              {config.type === 'email' && `Email: ${config.email}`}
-              {config.type === 'sms' && `Phone: ${config.phoneNumber}`}
-            </div>
-          ))}
+          <h3>Configure Notifications</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+            {webhookConfigs.map((config, index) => (
+              <Card key={index} className="relative">
+                <CardHeader>
+                  <CardTitle className="flex justify-between items-center">
+                    <span className="text-sm text-gray-500">Notification #{index + 1}</span>
+                    <span className="capitalize">{config.type}</span>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {config.type === 'endpoint' && <p>Endpoint: {config.endpoint}</p>}
+                  {config.type === 'slack' && <p>Slack: Connected</p>}
+                  {config.type === 'email' && <p>Email: {config.email}</p>}
+                  {config.type === 'sms' && <p>Phone: {config.phoneNumber}</p>}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
           {showWebhookConfigurator ? (
             <WebhookConfigurator 
               onConfigureWebhook={handleConfigureWebhook} 
@@ -69,7 +78,7 @@ const CompositeIndexWebhookBuilder: React.FC = () => {
             />
           ) : (
             <Button onClick={() => setShowWebhookConfigurator(true)} className="mt-2">
-              Add New Webhook
+              Add New Notification
             </Button>
           )}
         </div>
