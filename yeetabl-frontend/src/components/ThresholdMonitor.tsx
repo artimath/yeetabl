@@ -56,6 +56,12 @@ interface ThresholdGroup {
 export const ThresholdMonitor: React.FC = () => {
   const [thresholdGroups, setThresholdGroups] = useState<ThresholdGroup[]>([]);
   const [newCondition, setNewCondition] = useState<ThresholdCondition>({
+    id: '',
+    metric: '',
+    condition: 'greater',
+    value: 0,
+    timeFrame: 'anytime',
+  });
 
   const renderGroupSummary = (group: ThresholdGroup): React.ReactNode => {
     return (
@@ -73,12 +79,6 @@ export const ThresholdMonitor: React.FC = () => {
       </>
     );
   };
-    id: '',
-    metric: '',
-    condition: 'greater',
-    value: 0,
-    timeFrame: 'anytime',
-  });
 
   const handleAddCondition = (groupId: string) => {
     if (newCondition.metric && newCondition.condition) {
