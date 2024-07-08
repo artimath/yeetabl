@@ -111,22 +111,29 @@ export const ThresholdMonitor: React.FC = () => {
             </Button>
           </div>
         </div>
-        {group.items.map((item) => (
-          'operator' in item ? (
-            renderGroup(item, depth + 1, group.id)
-          ) : (
-            <Card key={item.id}>
-              <CardContent className="flex items-center justify-between p-4">
-                <span>
-                  If {item.metric} {item.condition} {item.value}
-                  {item.condition === 'increase' || item.condition === 'decrease' ? '%' : ''} {item.timeFrame}
-                </span>
-                <Button variant="destructive" onClick={() => handleRemoveCondition(group.id, item.id)}>
-                  <MinusCircle className="h-4 w-4" />
-                </Button>
-              </CardContent>
-            </Card>
-          )
+        {group.items.map((item, index) => (
+          <>
+            {index > 0 && (
+              <div className="text-center my-2 text-sm font-medium text-gray-500">
+                {group.operator}
+              </div>
+            )}
+            {'operator' in item ? (
+              renderGroup(item, depth + 1, group.id)
+            ) : (
+              <Card key={item.id}>
+                <CardContent className="flex items-center justify-between p-4">
+                  <span>
+                    If {item.metric} {item.condition} {item.value}
+                    {item.condition === 'increase' || item.condition === 'decrease' ? '%' : ''} {item.timeFrame}
+                  </span>
+                  <Button variant="destructive" onClick={() => handleRemoveCondition(group.id, item.id)}>
+                    <MinusCircle className="h-4 w-4" />
+                  </Button>
+                </CardContent>
+              </Card>
+            )}
+          </>
         ))}
         <div className="flex items-center space-x-2">
           <Select value={newCondition.metric} onValueChange={(value) => setNewCondition({ ...newCondition, metric: value })}>
