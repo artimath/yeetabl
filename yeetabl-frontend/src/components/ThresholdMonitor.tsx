@@ -411,9 +411,9 @@ export const ThresholdMonitor: React.FC = () => {
 
   return (
     <Card>
-      <CardContent>
+      <CardContent className="mt-6">
         {savedThresholds.length > 0 && (
-          <div className="mt-8">
+          <div>
             <h3 className="text-xl font-semibold mb-4">Saved Thresholds</h3>
             {savedThresholds.map((threshold) => (
               <Card key={threshold.id} className="mb-4">
