@@ -73,6 +73,15 @@ export const ThresholdMonitor: React.FC = () => {
   const [savedThresholds, setSavedThresholds] = useState<any[]>([]);
   const [webhooks, setWebhooks] = useState<Webhook[]>([]);
   const [newWebhookUrl, setNewWebhookUrl] = useState<string>('');
+  const [editingThreshold, setEditingThreshold] = useState<any | null>(null);
+
+  const handleEditThreshold = (threshold: any) => {
+    setThresholdGroups([threshold.rootGroup]);
+    setThresholdName(threshold.name);
+    setWebhooks(threshold.webhooks || []);
+    setIsCreating(true);
+    setEditingThreshold(threshold);
+  };
 
   const saveThreshold = () => {
     if (thresholdGroups.length === 0) {
