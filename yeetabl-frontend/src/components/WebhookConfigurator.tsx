@@ -87,7 +87,11 @@ const WebhookConfigurator: React.FC<WebhookConfiguratorProps> = ({
 
         {webhookType === 'slack' && (
           <div className="mb-4">
-            <Button variant="outline" onClick={() => console.log('Connect to Slack')}>
+            <Button
+              variant="outline"
+              onClick={() => console.log('Connect to Slack')}
+              aria-label="Connect to Slack using OAuth"
+            >
               Connect to Slack (OAuth)
             </Button>
           </div>
