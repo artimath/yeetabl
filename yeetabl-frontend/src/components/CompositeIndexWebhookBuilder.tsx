@@ -8,19 +8,8 @@ import WebhookConfigurator from './WebhookConfigurator';
 // import ThresholdSetter from './ThresholdSetter';
 
 const CompositeIndexWebhookBuilder: React.FC = () => {
-  // ... (keep existing state and handlers)
-
-  return (
-    
-  // TODO: Implement state management for metrics and thresholds
-  // const [metrics, setMetrics] = useState([]);
-  // const [thresholds, setThresholds] = useState({});
   const [webhookConfigs, setWebhookConfigs] = useState<any[]>([]);
   const [showWebhookConfigurator, setShowWebhookConfigurator] = useState(false);
-
-  // TODO: Implement handlers for adding metrics and setting thresholds
-  // const handleAddMetric = () => { ... };
-  // const handleSetThreshold = (metricId, value) => { ... };
 
   const handleConfigureWebhook = (config: any) => {
     setWebhookConfigs([...webhookConfigs, config]);
@@ -28,12 +17,12 @@ const CompositeIndexWebhookBuilder: React.FC = () => {
   };
 
   const handleSave = () => {
-    console.log('Saving configuration:', { /*metrics, thresholds,*/ webhookConfigs });
+    console.log('Saving configuration:', { webhookConfigs });
     // TODO: Implement actual save functionality
   };
 
   return (
-    <Card>
+    <Card className="max-w-2xl mx-auto">
       <CardHeader>
         <CardTitle>Composite Index Webhook Builder</CardTitle>
         <CardDescription>Create a composite index and configure webhooks for threshold alerts</CardDescription>
