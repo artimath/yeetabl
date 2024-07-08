@@ -3,7 +3,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 
 const data = [
   { events: 0, cost: 0, batchedCost: 0 },
-  { events: 100000, cost: 0, batchedCost: 0 },
+  { events: 100000, cost: 1.1 / 30, batchedCost: 0.5 / 30 },
   { events: 1000000, cost: 11 / 30, batchedCost: 5 / 30 },
   { events: 10000000, cost: 110 / 30, batchedCost: 50 / 30 },
   { events: 100000000, cost: 1100 / 30, batchedCost: 500 / 30 },
