@@ -73,7 +73,43 @@ export const ThresholdMonitor: React.FC = () => {
   });
   const [thresholdName, setThresholdName] = useState<string>('');
   const [isCreating, setIsCreating] = useState<boolean>(false);
-  const [savedThresholds, setSavedThresholds] = useState<any[]>([]);
+  const [savedThresholds, setSavedThresholds] = useState<any[]>([
+    {
+      id: 'dummy-threshold',
+      name: 'Example Threshold',
+      description: 'A predefined example threshold',
+      rootGroup: {
+        id: 'root',
+        operator: 'AND',
+        items: [
+          {
+            id: 'condition1',
+            metric: 'users_in_team',
+            condition: 'greater',
+            value: 30,
+            timeFrame: 'anytime'
+          },
+          {
+            id: 'condition2',
+            metric: 'usage_volume',
+            condition: 'greater',
+            value: 50000,
+            timeFrame: 'anytime'
+          },
+          {
+            id: 'condition3',
+            metric: 'monthly_cost',
+            condition: 'greater',
+            value: 7500,
+            timeFrame: 'anytime'
+          }
+        ]
+      },
+      notifications: [],
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    }
+  ]);
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [editingThreshold, setEditingThreshold] = useState<any | null>(null);
 
