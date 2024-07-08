@@ -43,10 +43,10 @@ const CostGraph: React.FC = () => {
             label={{ value: 'Events per day', position: 'insideBottom', offset: -5 }}
           />
           <YAxis
-            label={{ value: 'Estimated Cost ($)', angle: -90, position: 'insideLeft' }}
+            label={{ value: 'Estimated Cost ($ per day)', angle: -90, position: 'insideLeft' }}
           />
           <Tooltip
-            formatter={(value, name, props) => [`$${value}`, name]}
+            formatter={(value, name, props) => [`$${value} per day`, name]}
             labelFormatter={(value) => `${formatNumber(value)} events per day`}
           />
           <Line type="monotone" dataKey="cost" stroke="#8884d8" activeDot={{ r: 8 }} name="Unbatched" />

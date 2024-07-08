@@ -55,22 +55,21 @@ const ArchitecturePage: React.FC = () => {
           <CardTitle>Cost Analysis</CardTitle>
         </CardHeader>
         <CardContent>
-          <h3 className="text-xl font-semibold mb-2">Estimated Monthly Costs:</h3>
+          <h3 className="text-xl font-semibold mb-2">Estimated Daily Costs:</h3>
           <ul className="list-disc pl-6 mb-4">
             <li>
-              <strong>10,000 events per day (300,000 per month)</strong>: $0 (Included in
-              free tier)
+              <strong>10,000 events per day</strong>: $0 (Included in free tier)
             </li>
             <li>
-              <strong>1 million events per day (30 million per month)</strong>: $11
+              <strong>1 million events per day</strong>: $0.37
             </li>
             <li>
-              <strong>1 billion events per day (30 billion per month)</strong>: $16,500
+              <strong>1 billion events per day</strong>: $550
             </li>
           </ul>
           <p>
-            These estimates assume efficient code and optimized queries. Actual costs may
-            vary based on processing complexity.
+            These estimates assume efficient code and optimized queries. Actual daily costs may
+            vary based on processing complexity and event volume.
           </p>
           <div className="mt-4">
             <CostGraph />
