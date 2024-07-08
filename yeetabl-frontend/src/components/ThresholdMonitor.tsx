@@ -11,10 +11,12 @@ import {
 } from './ui/select';
 import { PlusCircle, MinusCircle, Link } from 'lucide-react';
 import { toast } from './ui/use-toast';
+import { NotificationManager } from './NotificationManager';
 
-interface Webhook {
+interface Notification {
   id: string;
-  url: string;
+  type: 'webhook' | 'email' | 'slack';
+  destination: string;
 }
 
 interface ThresholdCondition {
@@ -39,7 +41,7 @@ interface ThresholdGroup {
  *   name: string,
  *   description: string,
  *   rootGroup: ThresholdGroup,
- *   webhookUrl: string,
+ *   notifications: Notification[],
  *   createdAt: string (ISO 8601 date),
  *   updatedAt: string (ISO 8601 date)
  * }
@@ -71,14 +73,13 @@ export const ThresholdMonitor: React.FC = () => {
   const [thresholdName, setThresholdName] = useState<string>('');
   const [isCreating, setIsCreating] = useState<boolean>(false);
   const [savedThresholds, setSavedThresholds] = useState<any[]>([]);
-  const [webhooks, setWebhooks] = useState<Webhook[]>([]);
-  const [newWebhookUrl, setNewWebhookUrl] = useState<string>('');
+  const [notifications, setNotifications] = useState<Notification[]>([]);
   const [editingThreshold, setEditingThreshold] = useState<any | null>(null);
 
   const handleEditThreshold = (threshold: any) => {
     setThresholdGroups([threshold.rootGroup]);
     setThresholdName(threshold.name);
-    setWebhooks(threshold.webhooks || []);
+    setNotifications(threshold.notifications || []);
     setIsCreating(true);
     setEditingThreshold(threshold);
   };
@@ -107,7 +108,7 @@ export const ThresholdMonitor: React.FC = () => {
       name: thresholdName,
       description: 'User-defined threshold',
       rootGroup: thresholdGroups[0],
-      webhooks: webhooks,
+      notifications: notifications,
       createdAt: editingThreshold ? editingThreshold.createdAt : new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
@@ -132,7 +133,9 @@ export const ThresholdMonitor: React.FC = () => {
     // Reset the form
     setThresholdGroups([]);
     setThresholdName('');
+    setNotifications([]);
     setIsCreating(false);
+    setEditingThreshold(null);
   };
 
   const renderGroupSummary = (group: ThresholdGroup): React.ReactNode => {
@@ -416,6 +419,13 @@ export const ThresholdMonitor: React.FC = () => {
                 </div>
               )}
               <Button onClick={() => handleAddGroup()}>Add Threshold Group</Button>
+              <div className="mt-8">
+                <h3 className="text-xl font-semibold mb-4">Notifications</h3>
+                <NotificationManager
+                  notifications={notifications}
+                  onNotificationsChange={setNotifications}
+                />
+              </div>
             </>
           ) : (
             <Button onClick={() => setIsCreating(true)}>Create New Threshold</Button>
@@ -431,10 +441,20 @@ export const ThresholdMonitor: React.FC = () => {
                 </CardHeader>
                 <CardContent>
                   <p>{renderGroupSummary(threshold.rootGroup)}</p>
+                  <div className="mt-4">
+                    <h4 className="text-lg font-semibold mb-2">Notifications:</h4>
+                    <ul>
+                      {threshold.notifications.map((notification) => (
+                        <li key={notification.id}>
+                          {notification.type}: {notification.destination}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                   <Button
                     variant="outline"
                     onClick={() => handleEditThreshold(threshold)}
-                    className="mt-2"
+                    className="mt-4"
                   >
                     Edit Threshold
                   </Button>
