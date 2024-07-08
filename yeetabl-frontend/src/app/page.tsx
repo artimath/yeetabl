@@ -2,6 +2,8 @@ import Link from 'next/link';
 import { Button } from '../components/ui/button';
 import { ThemeToggle } from '../components/ThemeToggle';
 
+export const runtime = 'edge';
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-background text-foreground">
