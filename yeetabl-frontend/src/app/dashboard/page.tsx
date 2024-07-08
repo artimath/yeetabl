@@ -1,6 +1,7 @@
 'use client';
 import { ApiKeyManager } from '../../components/ApiKeyManager';
 import { DashboardLayout } from '../../components/DashboardLayout';
+import { HelpModal } from '../../components/HelpModal';
 
 import { SchemaViewer } from '../../components/SchemaViewer';
 import { CompiledMetrics } from '../../components/CompiledMetrics';
@@ -51,7 +52,10 @@ export default function Dashboard() {
       </div>
 
       <div className="flex justify-between items-center mb-4">
-        <ApiKeyManager />
+        <div>
+          <ApiKeyManager />
+          <HelpModal />
+        </div>
         <Button onClick={refreshData} disabled={isLoading}>
           {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : 'Refresh Data'}
         </Button>
