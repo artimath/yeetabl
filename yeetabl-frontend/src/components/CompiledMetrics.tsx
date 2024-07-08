@@ -63,15 +63,6 @@ export const CompiledMetrics: React.FC<CompiledMetricsProps> = ({
     return ((lastValue - firstValue) / firstValue) * 100;
   };
 
-  const renderGroupSummary = (group: ThresholdGroup): string => {
-    return group.items.map((item, index) => {
-      if ('metric' in item) {
-        return `${item.metric} ${item.condition} ${item.value}${item.condition === 'increase' || item.condition === 'decrease' ? '%' : ''} ${item.timeFrame}`;
-      } else {
-        return `(${renderGroupSummary(item)})`;
-      }
-    }).join(` ${group.operator} `);
-  };
 
   return (
     <div className="space-y-6">
