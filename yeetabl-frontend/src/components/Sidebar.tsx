@@ -1,9 +1,10 @@
 import Link from 'next/link';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
-import { Home, LineChart, Settings, KeyRound, FileText } from 'lucide-react';
+import { Home, LineChart, Settings, KeyRound, FileText, LayoutDashboard } from 'lucide-react';
 
 const navItems = [
-  { icon: Home, label: 'Dashboard', href: '/dashboard' },
+  { icon: Home, label: 'Home', href: '/' },
+  { icon: LayoutDashboard, label: 'Dashboard', href: '/dashboard' },
   { icon: LineChart, label: 'Analytics', href: '/dashboard/analytics' },
   { icon: KeyRound, label: 'API Keys', href: '/dashboard/api-keys' },
   { icon: FileText, label: 'Architecture', href: '/architecture' },
