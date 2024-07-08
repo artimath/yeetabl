@@ -5,15 +5,20 @@ import CustomerValueIndexBuilder from '../../components/CustomerValueIndexBuilde
 import CompositeIndexWebhookBuilder from '../../components/CompositeIndexWebhookBuilder';
 import { SchemaViewer } from '../../components/SchemaViewer';
 import { CompiledMetrics } from '../../components/CompiledMetrics';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { eventTables } from '../../dummyData';
 
 export default function Dashboard() {
   const [currentTable, setCurrentTable] = useState(Object.keys(eventTables)[0]);
+  const [timeRange, setTimeRange] = useState('7d');
 
-  const handleTableChange = (tableName: string) => {
+  const handleTableChange = useCallback((tableName: string) => {
     setCurrentTable(tableName);
-  };
+  }, []);
+
+  const handleTimeRangeChange = useCallback((range: string) => {
+    setTimeRange(range);
+  }, []);
 
   return (
     <DashboardLayout>
@@ -27,7 +32,7 @@ export default function Dashboard() {
         </div>
         <div className="w-1/2">
           <h2 className="text-2xl font-bold mb-4">Relevant Compiled Metrics</h2>
-          <CompiledMetrics currentTable={currentTable} />
+          <CompiledMetrics currentTable={currentTable} timeRange={timeRange} onTimeRangeChange={handleTimeRangeChange} />
         </div>
       </div>
     </DashboardLayout>
