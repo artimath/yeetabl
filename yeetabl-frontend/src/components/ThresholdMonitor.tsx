@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/table';
 
 import {
   Select,
@@ -305,6 +306,20 @@ export const ThresholdMonitor: React.FC = () => {
     }
   };
 
+  const generateDummyCustomers = () => {
+    const customers = [];
+    const names = ['Acme Corp', 'TechStar', 'InnovateCo', 'DataDrive', 'CloudNine'];
+    for (let i = 0; i < 5; i++) {
+      customers.push({
+        name: names[i],
+        teamSize: Math.floor(Math.random() * 50) + 10,
+        usage: Math.floor(Math.random() * 1000) + 100,
+        monthlyCost: Math.floor(Math.random() * 10000) + 1000,
+      });
+    }
+    return customers;
+  };
+
   const handleUpdateCondition = (
     groupId: string,
     conditionId: string,
@@ -565,24 +580,51 @@ export const ThresholdMonitor: React.FC = () => {
                   <CardTitle>{threshold.name}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p>{renderGroupSummary(threshold.rootGroup)}</p>
-                  <div className="mt-4">
-                    <h4 className="text-lg font-semibold mb-2">Notifications:</h4>
-                    <ul>
-                      {threshold.notifications.map((notification) => (
-                        <li key={notification.id}>
-                          {notification.type}: {notification.destination}
-                        </li>
-                      ))}
-                    </ul>
+                  <div className="flex">
+                    <div className="w-1/2 pr-4">
+                      <p>{renderGroupSummary(threshold.rootGroup)}</p>
+                      <div className="mt-4">
+                        <h4 className="text-lg font-semibold mb-2">Notifications:</h4>
+                        <ul>
+                          {threshold.notifications.map((notification) => (
+                            <li key={notification.id}>
+                              {notification.type}: {notification.destination}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <Button
+                        variant="outline"
+                        onClick={() => handleEditThreshold(threshold)}
+                        className="mt-4"
+                      >
+                        Edit Threshold
+                      </Button>
+                    </div>
+                    <div className="w-1/2 pl-4">
+                      <h4 className="text-lg font-semibold mb-2">Customers Hitting Threshold:</h4>
+                      <Table>
+                        <TableHeader>
+                          <TableRow>
+                            <TableHead>Customer</TableHead>
+                            <TableHead>Team Size</TableHead>
+                            <TableHead>Usage (gb-hrs)</TableHead>
+                            <TableHead>Monthly Cost</TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          {generateDummyCustomers().map((customer, index) => (
+                            <TableRow key={index}>
+                              <TableCell>{customer.name}</TableCell>
+                              <TableCell>{customer.teamSize}</TableCell>
+                              <TableCell>{customer.usage}</TableCell>
+                              <TableCell>${customer.monthlyCost}</TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </div>
                   </div>
-                  <Button
-                    variant="outline"
-                    onClick={() => handleEditThreshold(threshold)}
-                    className="mt-4"
-                  >
-                    Edit Threshold
-                  </Button>
                 </CardContent>
               </Card>
             ))}
