@@ -91,7 +91,7 @@ export const ThresholdMonitor: React.FC = () => {
 
   const renderGroup = (group: ThresholdGroup, depth: number = 0, parentGroupId?: string) => (
     <Card key={group.id} className={`mt-4 ${depth > 0 ? 'ml-4' : ''}`}>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-4 pt-4">
         <div className="flex items-center justify-between">
           <Select value={group.operator} onValueChange={(value) => handleChangeOperator(group.id, value as 'AND' | 'OR')}>
             <SelectTrigger className="w-[100px]">
