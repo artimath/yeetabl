@@ -69,7 +69,7 @@ const MetricSelector: React.FC<MetricSelectorProps> = ({ onAddMetric }) => {
             >
               {metricName
                 ? dummyMetrics.find((metric) => metric.name === metricName)?.name
-                : "Select metric..."}
+                : <span className="text-muted-foreground">Select metric...</span>}
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
@@ -81,9 +81,9 @@ const MetricSelector: React.FC<MetricSelectorProps> = ({ onAddMetric }) => {
                 {dummyMetrics.map((metric) => (
                   <CommandItem
                     key={metric.id}
-                    onSelect={(currentValue) => {
-                      setMetricName(currentValue === metricName ? "" : metric.name)
-                      setOpen(false)
+                    onSelect={() => {
+                      setMetricName(metric.name);
+                      setOpen(false);
                     }}
                   >
                     <Check
