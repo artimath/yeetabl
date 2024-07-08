@@ -47,7 +47,7 @@ export function CompositeIndexBuilder() {
         />
         <Select
           value={newFieldType}
-          onValueChange={(value: string) => setNewFieldType(value as IndexField['type'])}
+          onValueChange={(value: IndexField['type']) => setNewFieldType(value)}
         >
           <Select.Option value="record">Record</Select.Option>
           <Select.Option value="metric">Metric</Select.Option>
@@ -58,14 +58,16 @@ export function CompositeIndexBuilder() {
       <ul className="space-y-2">
         {fields.map((field, index) => (
           <li key={index} className="flex justify-between items-center">
-            <span>{field.name} ({field.type})</span>
-            <Button variant="destructive" onClick={() => removeField(index)}>Remove</Button>
+            <span>
+              {field.name} ({field.type})
+            </span>
+            <Button variant="destructive" onClick={() => removeField(index)}>
+              Remove
+            </Button>
           </li>
         ))}
       </ul>
-      {fields.length > 0 && (
-        <Button onClick={createIndex}>Create Composite Index</Button>
-      )}
+      {fields.length > 0 && <Button onClick={createIndex}>Create Composite Index</Button>}
     </div>
   );
 }
