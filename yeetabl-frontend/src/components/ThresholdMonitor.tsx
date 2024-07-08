@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
+
 import {
   Select,
   SelectContent,
@@ -147,7 +148,23 @@ export const ThresholdMonitor: React.FC = () => {
           <React.Fragment key={item.id}>
             {index > 0 && ` ${group.operator} `}
             {'metric' in item ? (
-              `${item.metric} ${item.condition} ${item.value}${item.condition === 'increase' || item.condition === 'decrease' ? '%' : ''} ${item.timeFrame}`
+              <>
+                {item.metric} {item.metric === 'service_type' ? 'is' : item.condition}{' '}
+                {item.metric === 'service_type' ? (
+                  <strong>{item.value}</strong>
+                ) : (
+                  <>
+                    <strong>
+                      {item.value}
+                      {item.metric === 'monthly_cost' ? '$' : ''}
+                      {item.condition === 'increase' || item.condition === 'decrease'
+                        ? '%'
+                        : ''}
+                    </strong>
+                  </>
+                )}{' '}
+                {item.timeFrame !== 'anytime' && item.timeFrame}
+              </>
             ) : (
               <span>({renderGroupSummary(item)})</span>
             )}
