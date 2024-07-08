@@ -354,6 +354,9 @@ export const ThresholdMonitor: React.FC = () => {
               <SelectItem value="daily_active_users">Daily Active Users</SelectItem>
               <SelectItem value="average_response_time">Average Response Time</SelectItem>
               <SelectItem value="total_revenue">Total Revenue</SelectItem>
+              <SelectItem value="users_in_team">Users in Team</SelectItem>
+              <SelectItem value="usage_volume">Usage Volume</SelectItem>
+              <SelectItem value="monthly_cost">Monthly Cost</SelectItem>
             </SelectContent>
           </Select>
           <Select
