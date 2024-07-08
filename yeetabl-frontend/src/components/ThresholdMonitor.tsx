@@ -94,19 +94,26 @@ export const ThresholdMonitor: React.FC = () => {
     }
 
     const thresholdConfig = {
-      id: Date.now().toString(),
+      id: editingThreshold ? editingThreshold.id : Date.now().toString(),
       name: thresholdName,
       description: 'User-defined threshold',
       rootGroup: thresholdGroups[0],
-      createdAt: new Date().toISOString(),
+      webhooks: webhooks,
+      createdAt: editingThreshold ? editingThreshold.createdAt : new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
 
     // Here you would typically send this to your backend API
     console.log('Saving threshold:', thresholdConfig);
 
-    // Add the new threshold to the savedThresholds array
-    setSavedThresholds((prevThresholds) => [...prevThresholds, thresholdConfig]);
+    // Add or update the threshold in the savedThresholds array
+    setSavedThresholds((prevThresholds) => {
+      if (editingThreshold) {
+        return prevThresholds.map((t) => (t.id === editingThreshold.id ? thresholdConfig : t));
+      } else {
+        return [...prevThresholds, thresholdConfig];
+      }
+    });
 
     toast({
       title: 'Success',
@@ -415,6 +422,13 @@ export const ThresholdMonitor: React.FC = () => {
                 </CardHeader>
                 <CardContent>
                   <p>{renderGroupSummary(threshold.rootGroup)}</p>
+                  <Button
+                    variant="outline"
+                    onClick={() => handleEditThreshold(threshold)}
+                    className="mt-2"
+                  >
+                    Edit Threshold
+                  </Button>
                 </CardContent>
               </Card>
             ))}
