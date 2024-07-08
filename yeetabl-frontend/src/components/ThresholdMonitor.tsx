@@ -67,7 +67,7 @@ export const ThresholdMonitor: React.FC = () => {
     id: '',
     metric: '',
     condition: 'greater',
-    value: 0,
+    value: '',
     timeFrame: 'anytime',
   });
   const [thresholdName, setThresholdName] = useState<string>('');
@@ -297,11 +297,22 @@ export const ThresholdMonitor: React.FC = () => {
               <Card key={item.id}>
                 <CardContent className="flex items-center justify-between p-4">
                   <span>
-                    If {item.metric} {item.condition} {item.value}
-                    {item.condition === 'increase' || item.condition === 'decrease'
-                      ? '%'
-                      : ''}{' '}
-                    {item.timeFrame}
+                    If {item.metric}{' '}
+                    {item.metric === 'service_type' ? 'is' : item.condition}{' '}
+                    {item.metric === 'service_type' ? (
+                      <strong>{item.value}</strong>
+                    ) : (
+                      <>
+                        <strong>
+                          {item.value}
+                          {item.metric === 'monthly_cost' ? '$' : ''}
+                          {item.condition === 'increase' || item.condition === 'decrease'
+                            ? '%'
+                            : ''}
+                        </strong>
+                      </>
+                    )}{' '}
+                    {item.timeFrame !== 'anytime' && item.timeFrame}
                   </span>
                   <Button
                     variant="destructive"
