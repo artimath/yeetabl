@@ -38,6 +38,24 @@ const WebhookConfigurator: React.FC<WebhookConfiguratorProps> = ({ onConfigureWe
   };
 
   return (
+    <Card className="max-w-md mx-auto">
+  const [webhookType, setWebhookType] = useState<WebhookType>('endpoint');
+  const [config, setConfig] = useState<WebhookConfig>({ type: 'endpoint' });
+
+  const handleTypeChange = (value: WebhookType) => {
+    setWebhookType(value);
+    setConfig({ ...config, type: value });
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setConfig({ ...config, [e.target.name]: e.target.value });
+  };
+
+  const handleSave = () => {
+    onConfigureWebhook(config);
+  };
+
+  return (
     <Card>
       <CardHeader>
         <CardTitle>Configure Webhook</CardTitle>

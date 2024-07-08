@@ -8,6 +8,10 @@ import WebhookConfigurator from './WebhookConfigurator';
 // import ThresholdSetter from './ThresholdSetter';
 
 const CompositeIndexWebhookBuilder: React.FC = () => {
+  // ... (keep existing state and handlers)
+
+  return (
+    
   // TODO: Implement state management for metrics and thresholds
   // const [metrics, setMetrics] = useState([]);
   // const [thresholds, setThresholds] = useState({});
