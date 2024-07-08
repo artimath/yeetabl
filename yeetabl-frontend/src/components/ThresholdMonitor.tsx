@@ -67,6 +67,11 @@ export const ThresholdMonitor: React.FC = () => {
     value: 0,
     timeFrame: 'anytime',
   });
+  const [thresholdName, setThresholdName] = useState<string>('');
+  const [isCreating, setIsCreating] = useState<boolean>(false);
+  const [savedThresholds, setSavedThresholds] = useState<any[]>([]);
+  const [webhooks, setWebhooks] = useState<Webhook[]>([]);
+  const [newWebhookUrl, setNewWebhookUrl] = useState<string>('');
 
   const renderGroupSummary = (group: ThresholdGroup): React.ReactNode => {
     return (
