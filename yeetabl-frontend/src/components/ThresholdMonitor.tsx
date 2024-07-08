@@ -87,32 +87,32 @@ export const ThresholdMonitor: React.FC = () => {
             metric: 'users_in_team',
             condition: 'greater',
             value: 30,
-            timeFrame: 'anytime'
+            timeFrame: 'anytime',
           },
           {
             id: 'condition2',
             metric: 'usage_volume',
             condition: 'greater',
             value: 50000,
-            timeFrame: 'anytime'
+            timeFrame: 'anytime',
           },
           {
             id: 'condition3',
             metric: 'monthly_cost',
             condition: 'greater',
             value: 7500,
-            timeFrame: 'anytime'
-          }
-        ]
+            timeFrame: 'anytime',
+          },
+        ],
       },
       notifications: [
         { id: 'webhook1', type: 'webhook', destination: 'https://example.com/endpoint' },
         { id: 'email1', type: 'email', destination: 'example@email.com' },
-        { id: 'slack1', type: 'slack', destination: 'Customer Success Channel' }
+        { id: 'slack1', type: 'slack', destination: 'Customer Success Channel' },
       ],
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-    }
+    },
   ]);
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [editingThreshold, setEditingThreshold] = useState<any | null>(null);
@@ -120,9 +120,7 @@ export const ThresholdMonitor: React.FC = () => {
   const handleEditThreshold = (threshold: any) => {
     const flattenGroup = (group: ThresholdGroup): ThresholdGroup => ({
       ...group,
-      items: group.items.map(item => 
-        'operator' in item ? flattenGroup(item) : item
-      )
+      items: group.items.map((item) => ('operator' in item ? flattenGroup(item) : item)),
     });
 
     setThresholdGroups([flattenGroup(threshold.rootGroup)]);
@@ -288,16 +286,21 @@ export const ThresholdMonitor: React.FC = () => {
     }
   };
 
-  const handleUpdateCondition = (groupId: string, conditionId: string, field: string, value: any) => {
+  const handleUpdateCondition = (
+    groupId: string,
+    conditionId: string,
+    field: string,
+    value: any,
+  ) => {
     setThresholdGroups((groups) =>
       updateGroup(groups, groupId, (group) => ({
         ...group,
         items: group.items.map((item) =>
           'metric' in item && item.id === conditionId
             ? { ...item, [field]: value }
-            : item
+            : item,
         ),
-      }))
+      })),
     );
   };
 
@@ -383,23 +386,33 @@ export const ThresholdMonitor: React.FC = () => {
                   <div className="flex items-center space-x-2">
                     <Select
                       value={item.metric}
-                      onValueChange={(value) => handleUpdateCondition(group.id, item.id, 'metric', value)}
+                      onValueChange={(value) =>
+                        handleUpdateCondition(group.id, item.id, 'metric', value)
+                      }
                     >
                       <SelectTrigger className="w-[200px]">
                         <SelectValue placeholder="Select metric" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="daily_active_users">Daily Active Users</SelectItem>
-                        <SelectItem value="average_response_time">Average Response Time</SelectItem>
+                        <SelectItem value="daily_active_users">
+                          Daily Active Users
+                        </SelectItem>
+                        <SelectItem value="average_response_time">
+                          Average Response Time
+                        </SelectItem>
                         <SelectItem value="total_revenue">Total Revenue</SelectItem>
                         <SelectItem value="users_in_team">Users in Team</SelectItem>
-                        <SelectItem value="usage_volume">Usage Volume</SelectItem>
+                        <SelectItem value="usage_volume">
+                          Usage Volume (gb-hrs)
+                        </SelectItem>
                         <SelectItem value="monthly_cost">Monthly Cost</SelectItem>
                       </SelectContent>
                     </Select>
                     <Select
                       value={item.condition}
-                      onValueChange={(value) => handleUpdateCondition(group.id, item.id, 'condition', value)}
+                      onValueChange={(value) =>
+                        handleUpdateCondition(group.id, item.id, 'condition', value)
+                      }
                     >
                       <SelectTrigger className="w-[150px]">
                         <SelectValue placeholder="Condition" />
@@ -414,12 +427,21 @@ export const ThresholdMonitor: React.FC = () => {
                     <Input
                       type="number"
                       value={item.value}
-                      onChange={(e) => handleUpdateCondition(group.id, item.id, 'value', parseFloat(e.target.value))}
+                      onChange={(e) =>
+                        handleUpdateCondition(
+                          group.id,
+                          item.id,
+                          'value',
+                          parseFloat(e.target.value),
+                        )
+                      }
                       className="w-[100px]"
                     />
                     <Select
                       value={item.timeFrame}
-                      onValueChange={(value) => handleUpdateCondition(group.id, item.id, 'timeFrame', value)}
+                      onValueChange={(value) =>
+                        handleUpdateCondition(group.id, item.id, 'timeFrame', value)
+                      }
                     >
                       <SelectTrigger className="w-[150px]">
                         <SelectValue placeholder="Time Frame" />
@@ -455,7 +477,7 @@ export const ThresholdMonitor: React.FC = () => {
               <SelectItem value="average_response_time">Average Response Time</SelectItem>
               <SelectItem value="total_revenue">Total Revenue</SelectItem>
               <SelectItem value="users_in_team">Users in Team</SelectItem>
-              <SelectItem value="usage_volume">Usage Volume</SelectItem>
+              <SelectItem value="usage_volume">Usage Volume (gb-hrs)</SelectItem>
               <SelectItem value="monthly_cost">Monthly Cost</SelectItem>
             </SelectContent>
           </Select>
