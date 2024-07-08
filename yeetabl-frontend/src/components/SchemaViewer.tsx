@@ -6,16 +6,26 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Button } from './ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-export const SchemaViewer: React.FC = () => {
+export const SchemaViewer: React.FC<{ onTableChange: (tableName: string) => void }> = ({ onTableChange }) => {
   const tableNames = Object.keys(eventTables);
   const [currentTableIndex, setCurrentTableIndex] = useState(0);
 
   const handlePrevious = () => {
-    setCurrentTableIndex((prev) => (prev > 0 ? prev - 1 : tableNames.length - 1));
+    const newIndex = currentTableIndex > 0 ? currentTableIndex - 1 : tableNames.length - 1;
+    setCurrentTableIndex(newIndex);
+    onTableChange(tableNames[newIndex]);
   };
 
   const handleNext = () => {
-    setCurrentTableIndex((prev) => (prev < tableNames.length - 1 ? prev + 1 : 0));
+    const newIndex = currentTableIndex < tableNames.length - 1 ? currentTableIndex + 1 : 0;
+    setCurrentTableIndex(newIndex);
+    onTableChange(tableNames[newIndex]);
+  };
+
+  const handleSelectChange = (value: string) => {
+    const newIndex = tableNames.indexOf(value);
+    setCurrentTableIndex(newIndex);
+    onTableChange(value);
   };
 
   const currentTableName = tableNames[currentTableIndex];
@@ -33,7 +43,7 @@ export const SchemaViewer: React.FC = () => {
           </SelectTrigger>
           <SelectContent>
             {tableNames.map((name) => (
-              <SelectItem key={name} value={name}>
+              <SelectItem key={name} value={name} onSelect={() => handleSelectChange(name)}>
                 {name}
               </SelectItem>
             ))}
