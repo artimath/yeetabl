@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { Button } from "./ui/button";
-import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "./ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { Check, ChevronsUpDown } from "lucide-react"
+import { cn } from "../lib/utils"
 import { dummyMetrics } from '../dummyData';
 
 interface Metric {
@@ -17,66 +20,96 @@ interface MetricSelectorProps {
 }
 
 const MetricSelector: React.FC<MetricSelectorProps> = ({ onAddMetric }) => {
+  const [open, setOpen] = useState(false);
   const [metricName, setMetricName] = useState('');
-  const [aggregation, setAggregation] = useState('sum');
-  const [timePeriod, setTimePeriod] = useState('24h');
+  const [aggregation, setAggregation] = useState('count');
+  const [timePeriod, setTimePeriod] = useState('7d');
 
   const handleAddMetric = () => {
-    if (metricName.trim()) {
+    if (metricName) {
       const newMetric: Metric = {
         id: Date.now().toString(),
-        name: metricName.trim(),
+        name: metricName,
         aggregation,
         timePeriod,
       };
       onAddMetric(newMetric);
       setMetricName('');
-      setAggregation('sum');
-      setTimePeriod('24h');
+      setAggregation('count');
+      setTimePeriod('7d');
     }
   };
 
   return (
     <div className="space-y-4">
       <div className="flex items-center space-x-2">
-        <Label>Show me the</Label>
+        <Label>IF</Label>
         <Select value={aggregation} onValueChange={setAggregation}>
           <SelectTrigger className="w-[100px]">
             <SelectValue placeholder="Select aggregation" />
           </SelectTrigger>
           <SelectContent>
+            <SelectItem value="count">COUNT</SelectItem>
             <SelectItem value="sum">SUM</SelectItem>
             <SelectItem value="average">AVERAGE</SelectItem>
-            <SelectItem value="count">COUNT</SelectItem>
             <SelectItem value="min">MIN</SelectItem>
             <SelectItem value="max">MAX</SelectItem>
           </SelectContent>
         </Select>
         <Label>of</Label>
-        <Input
-          className="w-[200px]"
-          value={metricName}
-          onChange={(e) => setMetricName(e.target.value)}
-          placeholder="Enter metric name"
-          list="metricNames"
-        />
-        <datalist id="metricNames">
-          {dummyMetrics.map((metric) => (
-            <option key={metric.id} value={metric.name} />
-          ))}
-        </datalist>
-        <Label>in the last</Label>
+        <Popover open={open} onOpenChange={setOpen}>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              role="combobox"
+              aria-expanded={open}
+              className="w-[200px] justify-between"
+            >
+              {metricName
+                ? dummyMetrics.find((metric) => metric.name === metricName)?.name
+                : "Select metric..."}
+              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-[200px] p-0">
+            <Command>
+              <CommandInput placeholder="Search metric..." />
+              <CommandEmpty>No metric found.</CommandEmpty>
+              <CommandGroup>
+                {dummyMetrics.map((metric) => (
+                  <CommandItem
+                    key={metric.id}
+                    onSelect={(currentValue) => {
+                      setMetricName(currentValue === metricName ? "" : metric.name)
+                      setOpen(false)
+                    }}
+                  >
+                    <Check
+                      className={cn(
+                        "mr-2 h-4 w-4",
+                        metricName === metric.name ? "opacity-100" : "opacity-0"
+                      )}
+                    />
+                    {metric.name}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </Command>
+          </PopoverContent>
+        </Popover>
+        <Label>in a</Label>
         <Select value={timePeriod} onValueChange={setTimePeriod}>
           <SelectTrigger className="w-[100px]">
             <SelectValue placeholder="Select time period" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="1h">1 hour</SelectItem>
-            <SelectItem value="24h">24 hours</SelectItem>
-            <SelectItem value="7d">7 days</SelectItem>
-            <SelectItem value="30d">30 days</SelectItem>
+            <SelectItem value="1d">1 DAY</SelectItem>
+            <SelectItem value="7d">7 DAY</SelectItem>
+            <SelectItem value="30d">30 DAY</SelectItem>
+            <SelectItem value="90d">90 DAY</SelectItem>
           </SelectContent>
         </Select>
+        <Label>PERIOD</Label>
       </div>
       <Button onClick={handleAddMetric}>Add Metric</Button>
     </div>
