@@ -25,6 +25,34 @@ interface ThresholdGroup {
   operator: 'AND' | 'OR';
 }
 
+/**
+ * Threshold Configuration Schema
+ * 
+ * {
+ *   id: string,
+ *   name: string,
+ *   description: string,
+ *   rootGroup: ThresholdGroup,
+ *   webhookUrl: string,
+ *   createdAt: string (ISO 8601 date),
+ *   updatedAt: string (ISO 8601 date)
+ * }
+ * 
+ * ThresholdGroup: {
+ *   id: string,
+ *   operator: 'AND' | 'OR',
+ *   items: (ThresholdCondition | ThresholdGroup)[]
+ * }
+ * 
+ * ThresholdCondition: {
+ *   id: string,
+ *   metric: string,
+ *   condition: 'greater' | 'less' | 'increase' | 'decrease',
+ *   value: number,
+ *   timeFrame: 'anytime' | '24h' | '7d'
+ * }
+ */
+
 export const ThresholdMonitor: React.FC = () => {
   const [thresholdGroups, setThresholdGroups] = useState<ThresholdGroup[]>([]);
   const [newCondition, setNewCondition] = useState<ThresholdCondition>({
