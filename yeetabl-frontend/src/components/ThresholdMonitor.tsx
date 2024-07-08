@@ -267,6 +267,19 @@ export const ThresholdMonitor: React.FC = () => {
       <CardContent>
         <div className="space-y-4">
           {thresholdGroups.map((group) => renderGroup(group))}
+          {thresholdGroups.length > 0 && (
+            <div className="bg-gray-100 p-4 rounded-md">
+              <h3 className="text-lg font-semibold mb-2">Current Query Summary:</h3>
+              <p>
+                {thresholdGroups.map((group, index) => (
+                  <span key={group.id}>
+                    {index > 0 && ` ${group.operator} `}
+                    ({group.items.length} condition{group.items.length !== 1 ? 's' : ''})
+                  </span>
+                ))}
+              </p>
+            </div>
+          )}
           <Button onClick={() => handleAddGroup()}>Add Threshold Group</Button>
         </div>
       </CardContent>
