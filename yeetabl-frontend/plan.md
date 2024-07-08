@@ -65,3 +65,16 @@ We're developing a serverless system on Cloudflare to act as a Segment destinati
 7. Test the system with real Segment event data
 
 This document provides a comprehensive overview of the project, its components, and the next steps for implementation. It should allow you to pick up where we left off and continue development of the Segment Event Threshold Monitoring System.
+
+## IDEAL USE CASE
+
+That’s kinda the moving target (and ideal for
+the tool)
+
+If I emit events, I want to be able to create a composite index
+
+- Number of users in a team
+- Type of service (volume of data)
+- Monthly cost
+
+And I want to, when people “trip” those gates, receive a webhook
