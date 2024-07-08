@@ -1,7 +1,6 @@
 import React from 'react';
 import { dummyMetrics } from '../dummyData';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/table';
 import { Button } from './ui/button';
 import { DemoLineChart } from './DemoLineChart';
 
@@ -14,15 +13,19 @@ export const CompiledMetrics: React.FC<{ currentTable: string }> = ({ currentTab
   };
 
   // Dummy data for the chart
-  const dummyChartData = [
-    { date: '2023-01-01', value: 1500 },
-    { date: '2023-01-02', value: 1800 },
-    { date: '2023-01-03', value: 2100 },
-    { date: '2023-01-04', value: 2400 },
-    { date: '2023-01-05', value: 2700 },
-    { date: '2023-01-06', value: 3000 },
-    { date: '2023-01-07', value: 3300 }
-  ];
+  const generateDummyChartData = () => {
+    const data = [];
+    const today = new Date();
+    for (let i = 6; i >= 0; i--) {
+      const date = new Date(today);
+      date.setDate(today.getDate() - i);
+      data.push({
+        date: date.toISOString().split('T')[0],
+        value: Math.floor(Math.random() * 1000) + 500
+      });
+    }
+    return data;
+  };
 
   return (
     <div className="space-y-6">
@@ -43,7 +46,7 @@ export const CompiledMetrics: React.FC<{ currentTable: string }> = ({ currentTab
                     </p>
                   </CardHeader>
                   <CardContent>
-                    <DemoLineChart data={dummyChartData} />
+                    <DemoLineChart data={generateDummyChartData()} />
                   </CardContent>
                 </Card>
               ))}
