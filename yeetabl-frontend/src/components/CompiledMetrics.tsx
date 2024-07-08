@@ -1,3 +1,4 @@
+'use client';
 import React, { useMemo } from 'react';
 import { dummyMetrics } from '../dummyData';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from './ui/card';
@@ -63,7 +64,6 @@ export const CompiledMetrics: React.FC<CompiledMetricsProps> = ({
     return ((lastValue - firstValue) / firstValue) * 100;
   };
 
-
   return (
     <div className="space-y-6">
       <Card>
@@ -103,7 +103,9 @@ export const CompiledMetrics: React.FC<CompiledMetricsProps> = ({
                       const trendColor = trend >= 0 ? 'text-green-500' : 'text-red-500';
                       return (
                         <>
-                          <div className={`flex gap-2 font-medium leading-none ${trendColor}`}>
+                          <div
+                            className={`flex gap-2 font-medium leading-none ${trendColor}`}
+                          >
                             Trending {trendDirection} by {Math.abs(trend).toFixed(1)}%
                             {timeRange === '24h' && ' in the last 24 hours'}
                             {timeRange === '7d' && ' in the last 7 days'}

@@ -1,5 +1,4 @@
 'use client';
-import { Sidebar } from './Sidebar';
 import Header from './Header';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';

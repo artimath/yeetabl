@@ -1,8 +1,16 @@
+'use client';
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/table';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from './ui/table';
 
 import {
   Select,
@@ -602,7 +610,9 @@ export const ThresholdMonitor: React.FC = () => {
                       </Button>
                     </div>
                     <div className="w-1/2 pl-4">
-                      <h4 className="text-lg font-semibold mb-2">Customers Hitting Threshold:</h4>
+                      <h4 className="text-lg font-semibold mb-2">
+                        Customers That Hit Threshold Last 7 Days:
+                      </h4>
                       <Table>
                         <TableHeader>
                           <TableRow>

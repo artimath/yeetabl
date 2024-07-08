@@ -1,23 +1,41 @@
+'use client';
 import React, { useState } from 'react';
 import { eventTables } from '../dummyData';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/table';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from './ui/table';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from './ui/select';
 import { Button } from './ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-export const SchemaViewer: React.FC<{ onTableChange: (tableName: string) => void }> = ({ onTableChange }) => {
+export const SchemaViewer: React.FC<{ onTableChange: (tableName: string) => void }> = ({
+  onTableChange,
+}) => {
   const tableNames = Object.keys(eventTables);
   const [currentTableIndex, setCurrentTableIndex] = useState(0);
 
   const handlePrevious = () => {
-    const newIndex = currentTableIndex > 0 ? currentTableIndex - 1 : tableNames.length - 1;
+    const newIndex =
+      currentTableIndex > 0 ? currentTableIndex - 1 : tableNames.length - 1;
     setCurrentTableIndex(newIndex);
     onTableChange(tableNames[newIndex]);
   };
 
   const handleNext = () => {
-    const newIndex = currentTableIndex < tableNames.length - 1 ? currentTableIndex + 1 : 0;
+    const newIndex =
+      currentTableIndex < tableNames.length - 1 ? currentTableIndex + 1 : 0;
     setCurrentTableIndex(newIndex);
     onTableChange(tableNames[newIndex]);
   };
@@ -46,7 +64,11 @@ export const SchemaViewer: React.FC<{ onTableChange: (tableName: string) => void
               </SelectTrigger>
               <SelectContent>
                 {tableNames.map((name) => (
-                  <SelectItem key={name} value={name} onSelect={() => handleSelectChange(name)}>
+                  <SelectItem
+                    key={name}
+                    value={name}
+                    onSelect={() => handleSelectChange(name)}
+                  >
                     {name}
                   </SelectItem>
                 ))}
