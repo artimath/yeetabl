@@ -27,6 +27,14 @@ const ArchitecturePage: React.FC = () => {
             allows for immediate reads at high rps, while enabling efficient queries
             across massive datasets.
           </p>
+          <img 
+            src="/sequence.png" 
+            alt="Sequence diagram of the architecture" 
+            className="w-full h-auto mb-4"
+          />
+          <p className="text-sm text-muted-foreground">
+            Sequence diagram showing the flow of data and operations in our architecture.
+          </p>
         </CardContent>
       </Card>
 
