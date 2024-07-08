@@ -3,20 +3,28 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "./ui/
 import { Button } from "./ui/button";
 import WebhookConfigurator from './WebhookConfigurator';
 import MetricSelector from './MetricSelector';
-
-// TODO: Import this sub-component once it's created
-// import ThresholdSetter from './ThresholdSetter';
+import ThresholdSetter from './ThresholdSetter';
 
 interface Metric {
   id: string;
   name: string;
+  type: 'event' | 'property';
+  eventName?: string;
+  propertyName?: string;
   aggregation: string;
+}
+
+interface Threshold {
+  metricId: string;
+  operator: '>' | '<' | '==' | '>=' | '<=';
+  value: number;
 }
 
 const CompositeIndexWebhookBuilder: React.FC = () => {
   const [webhookConfigs, setWebhookConfigs] = useState<any[]>([]);
   const [showWebhookConfigurator, setShowWebhookConfigurator] = useState(false);
   const [metrics, setMetrics] = useState<Metric[]>([]);
+  const [thresholds, setThresholds] = useState<Threshold[]>([]);
 
   const handleConfigureWebhook = (config: any) => {
     setWebhookConfigs([...webhookConfigs, config]);
@@ -27,8 +35,12 @@ const CompositeIndexWebhookBuilder: React.FC = () => {
     setMetrics([...metrics, metric]);
   };
 
+  const handleSetThreshold = (threshold: Threshold) => {
+    setThresholds([...thresholds, threshold]);
+  };
+
   const handleSave = () => {
-    console.log('Saving configuration:', { metrics, webhookConfigs });
+    console.log('Saving configuration:', { metrics, thresholds, webhookConfigs });
     // TODO: Implement actual save functionality
   };
 
@@ -49,7 +61,7 @@ const CompositeIndexWebhookBuilder: React.FC = () => {
               <ul className="list-disc pl-5">
                 {metrics.map((metric) => (
                   <li key={metric.id}>
-                    {metric.name} ({metric.aggregation})
+                    {metric.name} ({metric.type === 'event' ? metric.eventName : metric.propertyName}, {metric.aggregation})
                   </li>
                 ))}
               </ul>
@@ -60,8 +72,19 @@ const CompositeIndexWebhookBuilder: React.FC = () => {
         {/* Threshold Setting Section */}
         <div className="mb-6">
           <h3 className="text-lg font-semibold mb-2">Set Thresholds</h3>
-          {/* TODO: Implement ThresholdSetter component */}
-          {/* <ThresholdSetter metrics={metrics} onSetThreshold={handleSetThreshold} /> */}
+          <ThresholdSetter metrics={metrics} onSetThreshold={handleSetThreshold} />
+          {thresholds.length > 0 && (
+            <div className="mt-4">
+              <h4 className="text-md font-semibold mb-2">Set Thresholds:</h4>
+              <ul className="list-disc pl-5">
+                {thresholds.map((threshold, index) => (
+                  <li key={index}>
+                    {metrics.find(m => m.id === threshold.metricId)?.name} {threshold.operator} {threshold.value}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
 
         {/* Notification Configuration Section */}
