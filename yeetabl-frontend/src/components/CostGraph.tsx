@@ -4,11 +4,11 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 const data = [
   { events: 0, cost: 0, batchedCost: 0 },
   { events: 100000, cost: 0, batchedCost: 0 },
-  { events: 1000000, cost: 11, batchedCost: 0.003 },
-  { events: 10000000, cost: 110, batchedCost: 0.03 },
-  { events: 100000000, cost: 1100, batchedCost: 0.3 },
-  { events: 500000000, cost: 8250, batchedCost: 1.5 },
-  { events: 1000000000, cost: 16500, batchedCost: 3 },
+  { events: 1000000, cost: 11 / 30, batchedCost: 0.003 },
+  { events: 10000000, cost: 110 / 30, batchedCost: 0.03 },
+  { events: 100000000, cost: 1100 / 30, batchedCost: 0.3 },
+  { events: 500000000, cost: 8250 / 30, batchedCost: 1.5 },
+  { events: 1000000000, cost: 16500 / 30, batchedCost: 3 },
 ];
 
 const formatNumber = (num: number) => {
