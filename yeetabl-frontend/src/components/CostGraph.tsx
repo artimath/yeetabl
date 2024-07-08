@@ -4,11 +4,11 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 const data = [
   { events: 0, cost: 0, batchedCost: 0 },
   { events: 100000, cost: 0, batchedCost: 0 },
-  { events: 1000000, cost: 11, batchedCost: 9 },
-  { events: 10000000, cost: 110, batchedCost: 90 },
-  { events: 100000000, cost: 1100, batchedCost: 900 },
-  { events: 500000000, cost: 8250, batchedCost: 6750 },
-  { events: 1000000000, cost: 16500, batchedCost: 13500 },
+  { events: 1000000, cost: 11, batchedCost: 0.003 },
+  { events: 10000000, cost: 110, batchedCost: 0.03 },
+  { events: 100000000, cost: 1100, batchedCost: 0.3 },
+  { events: 500000000, cost: 8250, batchedCost: 1.5 },
+  { events: 1000000000, cost: 16500, batchedCost: 3 },
 ];
 
 const formatNumber = (num: number) => {
@@ -46,7 +46,10 @@ const CostGraph: React.FC = () => {
             label={{ value: 'Estimated Cost ($ per day)', angle: -90, position: 'insideLeft' }}
           />
           <Tooltip
-            formatter={(value, name, props) => [`$${value} per day`, name]}
+            formatter={(value, name, props) => {
+              const formattedValue = name === "Batched (4000 events)" ? `$${Number(value).toFixed(4)}` : `$${value}`;
+              return [`${formattedValue} per day`, name];
+            }}
             labelFormatter={(value) => `${formatNumber(value)} events per day`}
           />
           <Line type="monotone" dataKey="cost" stroke="#8884d8" activeDot={{ r: 8 }} name="Unbatched" />
