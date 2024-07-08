@@ -17,6 +17,14 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
             <ul className="flex space-x-4">
               <li>
                 <Link
+                  href="/dashboard"
+                  className={`text-sm font-medium ${pathname === '/dashboard' ? 'text-primary' : 'text-muted-foreground hover:text-primary'}`}
+                >
+                  Dashboard
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/"
                   className={`text-sm font-medium ${pathname === '/' ? 'text-primary' : 'text-muted-foreground hover:text-primary'}`}
                 >
@@ -25,10 +33,18 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
               </li>
               <li>
                 <Link
-                  href="/dashboard"
-                  className={`text-sm font-medium ${pathname === '/dashboard' ? 'text-primary' : 'text-muted-foreground hover:text-primary'}`}
+                  href="/dashboard/analytics"
+                  className={`text-sm font-medium ${pathname === '/dashboard/analytics' ? 'text-primary' : 'text-muted-foreground hover:text-primary'}`}
                 >
-                  Dashboard
+                  Analytics
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/dashboard/api-keys"
+                  className={`text-sm font-medium ${pathname === '/dashboard/api-keys' ? 'text-primary' : 'text-muted-foreground hover:text-primary'}`}
+                >
+                  API Keys
                 </Link>
               </li>
             </ul>
