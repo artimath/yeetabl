@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { dummyMetrics } from '../dummyData';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from './ui/card';
-import { TrendingUp } from 'lucide-react';
+import { TrendingUp, TrendingDown } from 'lucide-react';
 import { Button } from './ui/button';
 import { DemoLineChart } from './DemoLineChart';
 import { Tabs, TabsList, TabsTrigger } from './ui/tabs';
@@ -27,19 +27,32 @@ export const CompiledMetrics: React.FC<CompiledMetricsProps> = ({ currentTable, 
       '24h': 24,
       '7d': 7,
       '30d': 30,
-      '3m': 90,
-      '1y': 365
+      '3m': 12,
+      '1y': 12
     }[range] || 7;
 
     for (let i = dataPoints - 1; i >= 0; i--) {
       const date = new Date(today);
-      date.setDate(today.getDate() - i);
+      if (range === '3m') {
+        date.setDate(today.getDate() - i * 7); // Weekly data points for 3 months
+      } else if (range === '1y') {
+        date.setMonth(today.getMonth() - i); // Monthly data points for 1 year
+      } else {
+        date.setDate(today.getDate() - i);
+      }
       data.push({
         date: date,
         value: Math.floor(Math.random() * 1000) + 500
       });
     }
     return data;
+  };
+
+  const calculateTrend = (data: Array<{ date: Date; value: number }>) => {
+    if (data.length < 2) return 0;
+    const firstValue = data[0].value;
+    const lastValue = data[data.length - 1].value;
+    return ((lastValue - firstValue) / firstValue) * 100;
   };
 
   return (
@@ -73,12 +86,22 @@ export const CompiledMetrics: React.FC<CompiledMetricsProps> = ({ currentTable, 
                     <DemoLineChart data={generateDummyChartData(timeRange)} />
                   </CardContent>
                   <CardFooter className="flex-col items-start gap-2 text-sm">
-                    <div className="flex gap-2 font-medium leading-none">
-                      Trending up by 5.2% this {timeRange} <TrendingUp className="h-4 w-4" />
-                    </div>
-                    <div className="leading-none text-muted-foreground">
-                      Showing data for the last {timeRange}
-                    </div>
+                    {(() => {
+                      const chartData = generateDummyChartData(timeRange);
+                      const trend = calculateTrend(chartData);
+                      const trendDirection = trend >= 0 ? 'up' : 'down';
+                      const TrendIcon = trend >= 0 ? TrendingUp : TrendingDown;
+                      return (
+                        <>
+                          <div className="flex gap-2 font-medium leading-none">
+                            Trending {trendDirection} by {Math.abs(trend).toFixed(1)}% this {timeRange} <TrendIcon className="h-4 w-4" />
+                          </div>
+                          <div className="leading-none text-muted-foreground">
+                            Showing data for the last {timeRange}
+                          </div>
+                        </>
+                      );
+                    })()}
                   </CardFooter>
                 </Card>
               ))}
