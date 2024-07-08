@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
-import { PlusCircle, MinusCircle } from 'lucide-react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
-import { Label } from './ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from './ui/select';
 import { PlusCircle, MinusCircle } from 'lucide-react';
 
 interface ThresholdCondition {
@@ -34,28 +37,44 @@ export const ThresholdMonitor: React.FC = () => {
 
   const handleAddCondition = (groupId: string) => {
     if (newCondition.metric && newCondition.condition) {
-      setThresholdGroups(groups => updateGroup(groups, groupId, group => ({
-        ...group,
-        items: [...group.items, { ...newCondition, id: Date.now().toString() }]
-      })));
-      setNewCondition({ id: '', metric: '', condition: 'greater', value: 0, timeFrame: 'anytime' });
+      setThresholdGroups((groups) =>
+        updateGroup(groups, groupId, (group) => ({
+          ...group,
+          items: [...group.items, { ...newCondition, id: Date.now().toString() }],
+        })),
+      );
+      setNewCondition({
+        id: '',
+        metric: '',
+        condition: 'greater',
+        value: 0,
+        timeFrame: 'anytime',
+      });
     }
   };
 
   const handleRemoveCondition = (groupId: string, conditionId: string) => {
-    setThresholdGroups(groups => updateGroup(groups, groupId, group => ({
-      ...group,
-      items: group.items.filter(item => 'metric' in item && item.id !== conditionId)
-    })));
+    setThresholdGroups((groups) =>
+      updateGroup(groups, groupId, (group) => ({
+        ...group,
+        items: group.items.filter((item) => 'metric' in item && item.id !== conditionId),
+      })),
+    );
   };
 
   const handleAddGroup = (parentGroupId?: string) => {
-    const newGroup: ThresholdGroup = { id: Date.now().toString(), items: [], operator: 'AND' };
+    const newGroup: ThresholdGroup = {
+      id: Date.now().toString(),
+      items: [],
+      operator: 'AND',
+    };
     if (parentGroupId) {
-      setThresholdGroups(groups => updateGroup(groups, parentGroupId, group => ({
-        ...group,
-        items: [...group.items, newGroup]
-      })));
+      setThresholdGroups((groups) =>
+        updateGroup(groups, parentGroupId, (group) => ({
+          ...group,
+          items: [...group.items, newGroup],
+        })),
+      );
     } else {
       setThresholdGroups([...thresholdGroups, newGroup]);
     }
@@ -63,39 +82,62 @@ export const ThresholdMonitor: React.FC = () => {
 
   const handleRemoveGroup = (groupId: string, parentGroupId?: string) => {
     if (parentGroupId) {
-      setThresholdGroups(groups => updateGroup(groups, parentGroupId, group => ({
-        ...group,
-        items: group.items.filter(item => !('operator' in item) || item.id !== groupId)
-      })));
+      setThresholdGroups((groups) =>
+        updateGroup(groups, parentGroupId, (group) => ({
+          ...group,
+          items: group.items.filter(
+            (item) => !('operator' in item) || item.id !== groupId,
+          ),
+        })),
+      );
     } else {
-      setThresholdGroups(groups => groups.filter(g => g.id !== groupId));
+      setThresholdGroups((groups) => groups.filter((g) => g.id !== groupId));
     }
   };
 
   const handleChangeOperator = (groupId: string, operator: 'AND' | 'OR') => {
-    setThresholdGroups(groups => updateGroup(groups, groupId, group => ({ ...group, operator })));
+    setThresholdGroups((groups) =>
+      updateGroup(groups, groupId, (group) => ({ ...group, operator })),
+    );
   };
 
-  const updateGroup = (groups: ThresholdGroup[], groupId: string, updateFn: (group: ThresholdGroup) => ThresholdGroup): ThresholdGroup[] => {
-    return groups.map(group => {
+  const updateGroup = (
+    groups: ThresholdGroup[],
+    groupId: string,
+    updateFn: (group: ThresholdGroup) => ThresholdGroup,
+  ): ThresholdGroup[] => {
+    return groups.map((group) => {
       if (group.id === groupId) {
         return updateFn(group);
       }
       if ('items' in group) {
         return {
           ...group,
-          items: updateGroup(group.items.filter(item => 'operator' in item) as ThresholdGroup[], groupId, updateFn)
+          items: updateGroup(
+            group.items.filter((item) => 'operator' in item) as ThresholdGroup[],
+            groupId,
+            updateFn,
+          ),
         };
       }
       return group;
     });
   };
 
-  const renderGroup = (group: ThresholdGroup, depth: number = 0, parentGroupId?: string) => (
+  const renderGroup = (
+    group: ThresholdGroup,
+    depth: number = 0,
+    parentGroupId?: string,
+  ) => (
     <Card key={group.id} className={`mt-4 ${depth > 0 ? 'ml-4' : ''}`}>
       <CardContent className="space-y-4 pt-4">
         <div className="flex items-center justify-between">
-          <Select value={group.operator} onValueChange={(value) => handleChangeOperator(group.id, value as 'AND' | 'OR')}>
+          <Select
+            value={group.operator}
+            onValueChange={(value) =>
+              handleChangeOperator(group.id, value as 'AND' | 'OR')
+            }
+          >
             <SelectTrigger className="w-[100px]">
               <SelectValue placeholder="Operator" />
             </SelectTrigger>
@@ -105,10 +147,17 @@ export const ThresholdMonitor: React.FC = () => {
             </SelectContent>
           </Select>
           <div>
-            <Button variant="outline" onClick={() => handleAddGroup(group.id)} className="mr-2">
+            <Button
+              variant="outline"
+              onClick={() => handleAddGroup(group.id)}
+              className="mr-2"
+            >
               Add Nested Group
             </Button>
-            <Button variant="destructive" onClick={() => handleRemoveGroup(group.id, parentGroupId)}>
+            <Button
+              variant="destructive"
+              onClick={() => handleRemoveGroup(group.id, parentGroupId)}
+            >
               Remove Group
             </Button>
           </div>
@@ -127,9 +176,15 @@ export const ThresholdMonitor: React.FC = () => {
                 <CardContent className="flex items-center justify-between p-4">
                   <span>
                     If {item.metric} {item.condition} {item.value}
-                    {item.condition === 'increase' || item.condition === 'decrease' ? '%' : ''} {item.timeFrame}
+                    {item.condition === 'increase' || item.condition === 'decrease'
+                      ? '%'
+                      : ''}{' '}
+                    {item.timeFrame}
                   </span>
-                  <Button variant="destructive" onClick={() => handleRemoveCondition(group.id, item.id)}>
+                  <Button
+                    variant="destructive"
+                    onClick={() => handleRemoveCondition(group.id, item.id)}
+                  >
                     <MinusCircle className="h-4 w-4" />
                   </Button>
                 </CardContent>
@@ -138,7 +193,10 @@ export const ThresholdMonitor: React.FC = () => {
           </>
         ))}
         <div className="flex items-center space-x-2">
-          <Select value={newCondition.metric} onValueChange={(value) => setNewCondition({ ...newCondition, metric: value })}>
+          <Select
+            value={newCondition.metric}
+            onValueChange={(value) => setNewCondition({ ...newCondition, metric: value })}
+          >
             <SelectTrigger className="w-[200px]">
               <SelectValue placeholder="Select metric" />
             </SelectTrigger>
@@ -148,7 +206,15 @@ export const ThresholdMonitor: React.FC = () => {
               <SelectItem value="total_revenue">Total Revenue</SelectItem>
             </SelectContent>
           </Select>
-          <Select value={newCondition.condition} onValueChange={(value) => setNewCondition({ ...newCondition, condition: value as ThresholdCondition['condition'] })}>
+          <Select
+            value={newCondition.condition}
+            onValueChange={(value) =>
+              setNewCondition({
+                ...newCondition,
+                condition: value as ThresholdCondition['condition'],
+              })
+            }
+          >
             <SelectTrigger className="w-[150px]">
               <SelectValue placeholder="Condition" />
             </SelectTrigger>
@@ -159,8 +225,23 @@ export const ThresholdMonitor: React.FC = () => {
               <SelectItem value="decrease">% decrease</SelectItem>
             </SelectContent>
           </Select>
-          <Input type="number" value={newCondition.value} onChange={(e) => setNewCondition({ ...newCondition, value: parseFloat(e.target.value) })} className="w-[100px]" />
-          <Select value={newCondition.timeFrame} onValueChange={(value) => setNewCondition({ ...newCondition, timeFrame: value as ThresholdCondition['timeFrame'] })}>
+          <Input
+            type="number"
+            value={newCondition.value}
+            onChange={(e) =>
+              setNewCondition({ ...newCondition, value: parseFloat(e.target.value) })
+            }
+            className="w-[100px]"
+          />
+          <Select
+            value={newCondition.timeFrame}
+            onValueChange={(value) =>
+              setNewCondition({
+                ...newCondition,
+                timeFrame: value as ThresholdCondition['timeFrame'],
+              })
+            }
+          >
             <SelectTrigger className="w-[150px]">
               <SelectValue placeholder="Time Frame" />
             </SelectTrigger>
