@@ -3,6 +3,7 @@ name = "yeetabl-api"
 main = "src/index.ts"
 compatibility_date = "2024-07-01"
 compatibility_flags = ["nodejs_compat"]
+tail_consumers = [{ service = "yeetabl-api-tail" }]
 
 # Automatically place your workloads in an optimal location to minimize latency.
 # If you are running back-end logic in a Worker, running it closer to your back-end infrastructure
@@ -26,8 +27,9 @@ compatibility_flags = ["nodejs_compat"]
 
 # Bind an Analytics Engine dataset. Use Analytics Engine to write analytics within your Pages Function.
 # Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#analytics-engine-datasets
-# [[analytics_engine_datasets]]
-# binding = "MY_DATASET"
+[[analytics_engine_datasets]]
+binding = "YEET1"
+dataset = "YEET1"
 
 # Bind a headless browser instance running on Cloudflare's global network.
 # Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#browser-rendering

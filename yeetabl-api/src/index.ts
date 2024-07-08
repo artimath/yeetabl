@@ -1,5 +1,7 @@
 import { OpenAPIRouter } from '@cloudflare/itty-router-openapi';
 import { IRequestStrict } from 'itty-router';
+import { Env } from './types';
+import { env } from 'process';
 
 export const router = OpenAPIRouter({
   docs_url: '/',
@@ -25,20 +27,41 @@ type SegmentRequest = {
   body: SegmentEvent;
 } & IRequestStrict;
 
-router.all('/api/ingest', async (req: SegmentRequest) => {
-  console.log('Received request:', req);
-  const data = await req.json();
-  console.log('Request data:', data);
+router.all(
+  '/api/ingest',
+  async (req: SegmentRequest, env: Env, ctx: ExecutionContext) => {
+    console.log('Received request:', req);
+    const json: SegmentEvent = await req.json();
+    console.log('Request json:', json);
+    console.log('Request data:');
 
-  // send the event to the CF Workers Analytics Engine
+    // send the event to the CF Workers Analytics Engine
+    const dataset = env.YEET;
+    dataset.writeDataPoint({
+      blobs: [
+        JSON.stringify(json),
+        // json.messageId,
+        // json.timestamp,
+        // json.type,
+        // json.email,
+        // JSON.stringify(json.properties),
+        // json.event,
+      ],
+      // indexes: [json.userId],
+      doubles: [],
+    });
 
-  return new Response(JSON.stringify('Nope'), {
-    status: 200,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-});
+    return new Response(JSON.stringify('Stored in Analytics Engine'), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  },
+);
+
+// router.get('/api/logs', async (req, env:Env, ctx: ExecutionContext) => {
+//   const dataset = env.YEET;
 
 // 404 for everything else
 router.all('*', () =>
