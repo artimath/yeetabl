@@ -33,34 +33,32 @@ export const SchemaViewer: React.FC<{ onTableChange: (tableName: string) => void
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between mb-4">
-        <Select
-          value={currentTableName}
-          onValueChange={(value) => setCurrentTableIndex(tableNames.indexOf(value))}
-        >
-          <SelectTrigger className="w-[200px]">
-            <SelectValue placeholder="Select a table" />
-          </SelectTrigger>
-          <SelectContent>
-            {tableNames.map((name) => (
-              <SelectItem key={name} value={name} onSelect={() => handleSelectChange(name)}>
-                {name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        <div className="flex space-x-2">
-          <Button variant="outline" size="icon" onClick={handlePrevious}>
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
-          <Button variant="outline" size="icon" onClick={handleNext}>
-            <ChevronRight className="h-4 w-4" />
-          </Button>
-        </div>
-      </div>
       <Card>
-        <CardHeader>
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle>{currentTableName}</CardTitle>
+          <div className="flex items-center space-x-2">
+            <Select
+              value={currentTableName}
+              onValueChange={(value) => setCurrentTableIndex(tableNames.indexOf(value))}
+            >
+              <SelectTrigger className="w-[200px]">
+                <SelectValue placeholder="Select a table" />
+              </SelectTrigger>
+              <SelectContent>
+                {tableNames.map((name) => (
+                  <SelectItem key={name} value={name} onSelect={() => handleSelectChange(name)}>
+                    {name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <Button variant="outline" size="icon" onClick={handlePrevious}>
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            <Button variant="outline" size="icon" onClick={handleNext}>
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
         </CardHeader>
         <CardContent>
           <h3 className="text-lg font-semibold mb-2">Schema</h3>
