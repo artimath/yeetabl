@@ -42,8 +42,8 @@ export default function Dashboard() {
   return (
     <DashboardLayout>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-4">Dashboard Summary</h1>
-        <div className="bg-gray-100 p-4 rounded-lg">
+        <h1 className="text-3xl font-bold mb-4 text-primary">Dashboard Summary</h1>
+        <div className="bg-secondary p-4 rounded-lg text-secondary-foreground">
           <p>Total Events: 10,000</p>
           <p>Active Thresholds: 5</p>
           <p>Alerts Triggered (Last 24h): 3</p>
