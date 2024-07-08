@@ -1,3 +1,4 @@
+'use client';
 import { Sidebar } from './Sidebar';
 import Header from './Header';
 import Link from 'next/link';
@@ -14,12 +15,18 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
         <nav className="mb-4">
           <ul className="flex space-x-4">
             <li>
-              <Link href="/" className={`text-sm font-medium ${pathname === '/' ? 'text-primary' : 'text-muted-foreground hover:text-primary'}`}>
+              <Link
+                href="/"
+                className={`text-sm font-medium ${pathname === '/' ? 'text-primary' : 'text-muted-foreground hover:text-primary'}`}
+              >
                 Home
               </Link>
             </li>
             <li>
-              <Link href="/dashboard" className={`text-sm font-medium ${pathname === '/dashboard' ? 'text-primary' : 'text-muted-foreground hover:text-primary'}`}>
+              <Link
+                href="/dashboard"
+                className={`text-sm font-medium ${pathname === '/dashboard' ? 'text-primary' : 'text-muted-foreground hover:text-primary'}`}
+              >
                 Dashboard
               </Link>
             </li>
