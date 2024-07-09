@@ -2,7 +2,6 @@ import { Inter as FontSans } from 'next/font/google';
 import './globals.css';
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from 'next-themes';
-import { ClerkProvider } from '@clerk/nextjs';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import Analytics from '@/components/analytics';
 
@@ -27,22 +26,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <ClerkProvider>
-        <body
-          className={cn(
-            'min-h-screen bg-background font-sans antialiased',
-            fontSans.variable,
-          )}
-        >
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <TooltipProvider>
-              {children}
-              {/* <ClientThemeToggle /> */}
-            </TooltipProvider>
-          </ThemeProvider>
-        </body>
-        <Analytics />
-      </ClerkProvider>
+      <body
+        className={cn(
+          'min-h-screen bg-background font-sans antialiased',
+          fontSans.variable,
+        )}
+      >
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <TooltipProvider>
+            {children}
+            {/* <ClientThemeToggle /> */}
+          </TooltipProvider>
+        </ThemeProvider>
+      </body>
+      <Analytics />
     </html>
   );
 }
