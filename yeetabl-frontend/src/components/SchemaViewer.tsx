@@ -47,7 +47,7 @@ export const SchemaViewer: React.FC<{ onTableChange: (tableName: string) => void
   };
 
   const currentTableName = tableNames[currentTableIndex];
-  const currentTableData = eventTables[currentTableName];
+  const currentTableData = eventTables[currentTableName as keyof typeof eventTables];
 
   return (
     <div className="space-y-6">
@@ -114,7 +114,7 @@ export const SchemaViewer: React.FC<{ onTableChange: (tableName: string) => void
               {currentTableData.sample.map((row, index) => (
                 <TableRow key={index}>
                   {Object.keys(currentTableData.schema).map((field) => (
-                    <TableCell key={field}>{row[field]}</TableCell>
+                    <TableCell key={field}>{row[field as keyof typeof row]}</TableCell>
                   ))}
                 </TableRow>
               ))}

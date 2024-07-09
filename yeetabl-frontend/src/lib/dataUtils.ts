@@ -5,7 +5,7 @@ export function generateDataPoints(
   increment: number,
 ) {
   const dataPoints = [];
-  let currentDate = new Date(startDate);
+  const currentDate = new Date(startDate);
   let currentValue = startValue;
 
   for (let i = 0; i < numDays; i++) {

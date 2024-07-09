@@ -1,5 +1,6 @@
 'use client';
 import React from 'react';
+export const runtime = 'edge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import CostGraph from '@/components/CostGraph';
 import { DashboardLayout } from '@/components/DashboardLayout';

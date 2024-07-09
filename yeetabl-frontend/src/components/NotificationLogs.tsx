@@ -9,12 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from './ui/table';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from './ui/tooltip';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip';
 
 interface NotificationLog {
   id: string;
@@ -72,6 +67,11 @@ const mockLogs: NotificationLog[] = [
     customer: 'CloudNine',
     notificationMethod: 'SMS',
     dateTime: '2023-06-04 16:20:00',
+    metricTripped: 'Daily Active Users',
+    thresholdCrossed: '> 1000',
+    teamSize: 50,
+    usage: 1200,
+    cost: 5000,
   },
   {
     id: '5',
@@ -79,6 +79,11 @@ const mockLogs: NotificationLog[] = [
     customer: 'InnovateCo',
     notificationMethod: 'Email',
     dateTime: '2023-06-05 10:00:00',
+    metricTripped: 'Monthly Cost',
+    thresholdCrossed: '> $10,000',
+    teamSize: 30,
+    usage: 3000,
+    cost: 12000,
   },
   {
     id: '6',
@@ -86,6 +91,11 @@ const mockLogs: NotificationLog[] = [
     customer: 'TechStar',
     notificationMethod: 'Slack',
     dateTime: '2023-06-05 13:30:00',
+    metricTripped: 'Monthly Cost',
+    thresholdCrossed: '> $10,000',
+    teamSize: 30,
+    usage: 3000,
+    cost: 12000,
   },
   {
     id: '7',
@@ -93,6 +103,11 @@ const mockLogs: NotificationLog[] = [
     customer: 'Acme Corp',
     notificationMethod: 'Webhook',
     dateTime: '2023-06-06 09:45:00',
+    metricTripped: 'Monthly Cost',
+    thresholdCrossed: '> $10,000',
+    teamSize: 30,
+    usage: 3000,
+    cost: 12000,
   },
   {
     id: '8',
@@ -100,6 +115,11 @@ const mockLogs: NotificationLog[] = [
     customer: 'DataDrive',
     notificationMethod: 'Email',
     dateTime: '2023-06-06 14:15:00',
+    metricTripped: 'Monthly Cost',
+    thresholdCrossed: '> $10,000',
+    teamSize: 30,
+    usage: 3000,
+    cost: 12000,
   },
   {
     id: '9',
@@ -107,6 +127,11 @@ const mockLogs: NotificationLog[] = [
     customer: 'CloudNine',
     notificationMethod: 'SMS',
     dateTime: '2023-06-07 11:30:00',
+    metricTripped: 'Monthly Cost',
+    thresholdCrossed: '> $10,000',
+    teamSize: 30,
+    usage: 3000,
+    cost: 12000,
   },
   {
     id: '10',
@@ -114,6 +139,11 @@ const mockLogs: NotificationLog[] = [
     customer: 'InnovateCo',
     notificationMethod: 'Slack',
     dateTime: '2023-06-07 16:00:00',
+    metricTripped: 'Monthly Cost',
+    thresholdCrossed: '> $10,000',
+    teamSize: 30,
+    usage: 3000,
+    cost: 12000,
   },
   {
     id: '11',
@@ -121,6 +151,11 @@ const mockLogs: NotificationLog[] = [
     customer: 'Acme Corp',
     notificationMethod: 'Email',
     dateTime: '2023-06-07 10:30:00',
+    metricTripped: 'Monthly Cost',
+    thresholdCrossed: '> $10,000',
+    teamSize: 30,
+    usage: 3000,
+    cost: 12000,
   },
   {
     id: '12',
@@ -128,6 +163,11 @@ const mockLogs: NotificationLog[] = [
     customer: 'TechStar',
     notificationMethod: 'Webhook',
     dateTime: '2023-06-07 14:45:00',
+    metricTripped: 'Monthly Cost',
+    thresholdCrossed: '> $10,000',
+    teamSize: 30,
+    usage: 3000,
+    cost: 12000,
   },
   {
     id: '13',
@@ -135,6 +175,11 @@ const mockLogs: NotificationLog[] = [
     customer: 'DataDrive',
     notificationMethod: 'SMS',
     dateTime: '2023-06-07 17:20:00',
+    metricTripped: 'Monthly Cost',
+    thresholdCrossed: '> $10,000',
+    teamSize: 30,
+    usage: 3000,
+    cost: 12000,
   },
   {
     id: '14',
@@ -142,6 +187,11 @@ const mockLogs: NotificationLog[] = [
     customer: 'CloudNine',
     notificationMethod: 'Slack',
     dateTime: '2023-06-07 09:00:00',
+    metricTripped: 'Monthly Cost',
+    thresholdCrossed: '> $10,000',
+    teamSize: 30,
+    usage: 3000,
+    cost: 12000,
   },
   {
     id: '15',
@@ -149,6 +199,11 @@ const mockLogs: NotificationLog[] = [
     customer: 'InnovateCo',
     notificationMethod: 'Email',
     dateTime: '2023-06-07 12:15:00',
+    metricTripped: 'Monthly Cost',
+    thresholdCrossed: '> $10,000',
+    teamSize: 30,
+    usage: 3000,
+    cost: 12000,
   },
 ];
 

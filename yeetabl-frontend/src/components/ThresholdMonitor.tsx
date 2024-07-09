@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
@@ -19,7 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from './ui/select';
-import { PlusCircle, MinusCircle, Link } from 'lucide-react';
+import { PlusCircle, MinusCircle } from 'lucide-react';
 import { toast } from './ui/use-toast';
 import { NotificationManager } from './NotificationManager';
 
@@ -77,7 +78,7 @@ export const ThresholdMonitor: React.FC = () => {
     id: '',
     metric: '',
     condition: 'greater',
-    value: '',
+    value: 0,
     timeFrame: 'anytime',
   });
   const [thresholdName, setThresholdName] = useState<string>('');
@@ -594,7 +595,7 @@ export const ThresholdMonitor: React.FC = () => {
                       <div className="mt-4">
                         <h4 className="text-lg font-semibold mb-2">Notifications:</h4>
                         <ul>
-                          {threshold.notifications.map((notification) => (
+                          {threshold.notifications.map((notification: any) => (
                             <li key={notification.id}>
                               {notification.type}: {notification.destination}
                             </li>

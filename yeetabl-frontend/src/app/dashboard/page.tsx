@@ -11,7 +11,7 @@ import { useState, useCallback, useEffect } from 'react';
 import { eventTables } from '../../dummyData';
 import { Button } from '../../components/ui/button';
 import { Loader2 } from 'lucide-react';
-
+export const runtime = 'edge';
 export default function Dashboard() {
   const [currentTable, setCurrentTable] = useState(Object.keys(eventTables)[0]);
   const [timeRange, setTimeRange] = useState('7d');
