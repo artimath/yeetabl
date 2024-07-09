@@ -24,7 +24,7 @@ export const AdminNotification: React.FC = () => {
       .filter(log => selectedLogs.includes(log.id))
       .map(log => log.message);
 
-    const url = 'https://api.bluefox.email/v1/accounts/668ce9ec71935df50e4d04c4/projects/668ceb2c71935df50e4d069a/transactional-emails/668cf23371935df50e4d0b7d/send';
+    const url = 'https://api.bluefox.email/v1/accounts/668ce9ec71935df50e4d04c4/projects/668ceb2c71935df50e4d069a/transactional-emails/668cf1c271935df50e4d0b18/send';
     try {
       const response = await fetch(url, {
         method: 'POST',
