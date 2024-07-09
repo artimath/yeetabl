@@ -8,6 +8,7 @@ import { CompiledMetrics } from '../../components/CompiledMetrics';
 import { ThresholdMonitor } from '../../components/ThresholdMonitor';
 import { NotificationLogs } from '../../components/NotificationLogs';
 import { RealTimeLog } from '../../components/RealTimeLog';
+import { AdminNotification } from '../../components/AdminNotification';
 import { useState, useCallback, useEffect } from 'react';
 import { eventTables } from '../../dummyData';
 import { Button } from '../../components/ui/button';
@@ -99,6 +100,10 @@ export default function Dashboard() {
         <div className="pt-4">
           <h2 className="text-2xl font-bold mb-4">Real-Time Event Log</h2>
           <RealTimeLog />
+        </div>
+        <div className="pt-4">
+          <h2 className="text-2xl font-bold mb-4">Admin Notification</h2>
+          <AdminNotification />
         </div>
       </div>
     </DashboardLayout>
