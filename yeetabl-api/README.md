@@ -1,25 +1,45 @@
-# Cloudflare Workers OpenAPI 3.1
+# Yeetabl API
 
-This is a Cloudflare Worker with OpenAPI 3.1 using [itty-router-openapi](https://github.com/cloudflare/itty-router-openapi).
+This is the backend API for the Yeetabl project, a Segment Event Threshold Monitoring System. It's built using Cloudflare Workers with OpenAPI 3.1 and [itty-router-openapi](https://github.com/cloudflare/itty-router-openapi).
 
-This is an example project made to be used as a quick start into building OpenAPI compliant Workers that generates the
-`openapi.json` schema automatically from code and validates the incoming request to the defined parameters or request body.
+## Features
 
-## Get started
+- Receives and processes events from Segment
+- Manages user-defined thresholds
+- Checks thresholds and sends notifications
+- Provides RESTful API for the frontend
 
-1. Sign up for [Cloudflare Workers](https://workers.dev). The free tier is more than enough for most use cases.
+## Getting Started
+
+1. Sign up for [Cloudflare Workers](https://workers.dev).
 2. Clone this project and install dependencies with `npm install`
-3. Run `wrangler login` to login to your Cloudflare account in wrangler
+3. Run `wrangler login` to log in to your Cloudflare account in wrangler
 4. Run `wrangler deploy` to publish the API to Cloudflare Workers
 
-## Project structure
+## Project Structure
 
-1. Your main router is defined in `src/index.ts`.
+1. The main router is defined in `src/index.ts`.
 2. Each endpoint has its own file in `src/endpoints/`.
-3. For more information read the [itty-router-openapi official documentation](https://cloudflare.github.io/itty-router-openapi/).
+3. Utility functions and shared logic are in `src/utils/`.
 
 ## Development
 
 1. Run `wrangler dev` to start a local instance of the API.
 2. Open `http://localhost:9000/` in your browser to see the Swagger interface where you can try the endpoints.
 3. Changes made in the `src/` folder will automatically trigger the server to reload, you only need to refresh the Swagger interface.
+
+## API Endpoints
+
+- `/segment-webhook`: Receives events from Segment
+- `/thresholds`: CRUD operations for managing thresholds
+- `/notifications`: Manages notification settings
+
+For more detailed API documentation, refer to the Swagger UI when running the project locally.
+
+## Contributing
+
+Please read our contributing guidelines before submitting pull requests.
+
+## License
+
+This project is licensed under the MIT License.
